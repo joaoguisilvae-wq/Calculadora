@@ -1,0 +1,47 @@
+/* Root */
+:root {
+  --black-theme--background: #111;
+  --black-theme-color: #fff;
+  --black-theme-btn: #333;
+  --black-theme-btn-hover: #666;
+  --icon-color: #fc930a;
+}
+
+/* Geral */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--black-theme--background);
+}
+
+/* Header */
+#header-container header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex: 1;
+}
+
+/* Numbers table */
+#numbers-table button {
+  width: 45px;
+  height: 35px;
+  background-color: var(--black-theme-btn);
+  border-radius: 15px;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--black-theme-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#numbers-table .icon {
+  color: var(--icon-color);
+}
+
+#numbers-table .number {
+  font-weight: 100;
+}
