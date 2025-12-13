@@ -2,9 +2,11 @@
 :root {
   --black-theme--background: #111;
   --black-theme-color: #fff;
+  --black-theme-history: #333;
   --black-theme-btn: #333;
-  --black-theme-btn-hover: #666;
   --icon-color: #fc930a;
+  --equal-theme-color: #fc930a;
+  --equal-color: #fff;
 }
 
 /* Geral */
@@ -15,6 +17,7 @@
 
 body {
   background-color: var(--black-theme--background);
+  height: 100dvh;
 }
 
 /* Header */
@@ -25,7 +28,42 @@ body {
   flex: 1;
 }
 
+#header-container button {
+  background: none;
+  border: none;
+  color: var(--black-theme-color);
+  padding: 10px;
+  font-size: 1rem;
+}
+
+/* Calculate-table */
+#calculate-table {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: space-between;
+  color: var(--black-theme-color);
+  padding: 0 100px;
+  margin: 20px 0;
+  height: 45%;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+#calculate-table .operation-history {
+  color: var(--black-theme-history);
+}
+
 /* Numbers table */
+#numbers-table {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 40%;
+  margin: 0 auto;
+  text-align: center;
+}
+
 #numbers-table button {
   width: 45px;
   height: 35px;
@@ -44,4 +82,29 @@ body {
 
 #numbers-table .number {
   font-weight: 100;
+}
+
+#numbers-table #equal-btn {
+  background-color: var(--equal-theme-color);
+  color: var(--equal-color);
+}
+
+/* Media query */
+@media (max-width: 450px) {
+  #header-container {
+    width: 90%;
+  }
+  #calculate-table {
+    padding: 0 25px;
+  }
+
+  #numbers-table {
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    height: 100%;
+    max-height: 50px;
+    margin: 0 auto;
+    text-align: center;
+  }
 }
