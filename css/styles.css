@@ -53,16 +53,17 @@ body {
   padding: 0 100px;
   margin: 20px 0;
   height: 45%;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: bold;
 }
 
-#calculate-table .operation-history {
+#calculate-table #previous-operation {
   color: var(--black-theme-history);
 }
 
 #calculate-table #in-operation {
   margin-bottom: 20px;
+  font-size: 2rem;
 }
 /* Numbers table */
 #numbers-table {
