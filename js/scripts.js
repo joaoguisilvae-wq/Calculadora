@@ -1,68 +1,145 @@
+// Objetos
+class Calculator {
+  constructor(previousOperationText, inOperationText) {
+    this.previousOperationText = previousOperationText;
+    this.inOperationText = inOperationText;
+    this.inOperation = "";
+  }
+
+  // Colorcar número na tela da calculadora
+  addDigit(digit) {
+    // Checar se ja esxiste virgula na operação
+    if (digit === "." && this.inOperationText.innerText.includes(".")) {
+      return;
+    }
+
+    this.inOperation = digit;
+    this.updateScreen();
+  }
+
+  // Processar operações
+  processOperations(operation) {
+    // Checar se o current esta vazio ou é AC
+    if (this.inOperationText.innerText === "" && operation !== "AC") {
+      if (this.previousOperationText.innerText !== "") {
+        // Mudar operação
+        this.changeOperation(operation);
+      }
+      return;
+    }
+
+    // Pegar valor atual e anterior
+    let operationValue;
+    const previous = +this.previousOperationText.innerText.split(" ")[0];
+    const current = +this.inOperationText.innerText;
+
+    switch (operation) {
+      case "+":
+        operationValue = previous + current;
+        this.updateScreen(operationValue, operation, current, previous);
+        break;
+      case "-":
+        operationValue = previous - current;
+        this.updateScreen(operationValue, operation, current, previous);
+        break;
+      case "/":
+        operationValue = previous / current;
+        this.updateScreen(operationValue, operation, current, previous);
+        break;
+      case "*":
+        operationValue = previous * current;
+        this.updateScreen(operationValue, operation, current, previous);
+        break;
+      case "%":
+        operationValue = (previous * current) / 100;
+        this.updateScreen(operationValue, operation, current, previous);
+        break;
+      case "DEL":
+        this.processDelOperator();
+        break;
+      case "AC":
+        this.processAcOperator();
+        break;
+      case "=":
+        this.processEqualOperator();
+        break;
+      default:
+        return;
+    }
+  }
+
+  // Atulaizar tela da calculadora
+  updateScreen(
+    operationValue = null,
+    operation = null,
+    current = null,
+    previous = null
+  ) {
+    console.log(operationValue, operation, current, previous);
+
+    if (operationValue === null) {
+      this.inOperationText.innerText += this.inOperation;
+    } else {
+      // Se previous = 0, adicionar current
+      if (previous === 0) {
+        operationValue = current;
+      }
+
+      // Colorcar o valor de current para previous
+      this.previousOperationText.innerText = `${operationValue} ${operation}`;
+      this.inOperationText.innerText = "";
+    }
+  }
+
+  // Mudar operação
+  changeOperation(operation) {
+    const mathOperations = ["*", "/", "+", "-"];
+
+    if (!mathOperations.includes(operation)) {
+      return;
+    }
+
+    this.previousOperationText.innerText =
+      this.previousOperationText.innerText.slice(0, -1) + operation;
+  }
+
+  // Deletando operação atual
+  processDelOperator() {
+    this.inOperationText.innerText = "";
+  }
+
+  // Deletando operações atuais
+  processAcOperator() {
+    this.previousOperationText.innerText = "";
+    this.inOperationText.innerText = "";
+  }
+
+  // Processar a operação
+  processEqualOperator() {
+    const operation = previousOperationText.innerText.split(" ")[1];
+
+    this.processOperations(operation);
+  }
+}
+
 // Seleção de elementos
+const previousOperationText = document.querySelector("#previous-operation");
 const calcTable = document.querySelector("#calculate-table");
-const inOperation = document.querySelector("#in-operation");
+const inOperationText = document.querySelector("#in-operation");
 const numsTable = document.querySelector("#numbers-table");
 const numsTableBtns = document.querySelectorAll("#numbers-table button");
 
-// Funções
+// Eventos
+const calc = new Calculator(previousOperationText, inOperationText);
+
 numsTableBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    const value = e.target.innerHTML;
+    const value = e.target.innerText;
 
-    console.log(value);
+    if (+value >= 0 || value === ".") {
+      calc.addDigit(value);
+    } else {
+      calc.processOperations(value);
+    }
   });
 });
-function sum(a, b) {
-  const sumBtn = document.querySelector("#sum-btn");
-
-  sumBtn.addEventListener("click", () => {
-    console.log(a + b);
-  });
-}
-
-function subtraction(a, b) {
-  const subtractionBtn = document.querySelector("#subtraction-btn");
-
-  subtractionBtn.addEventListener("click", () => {
-    console.log(a - b);
-  });
-}
-
-function multiplicator(a, b) {
-  const multiplicatortn = document.querySelector("#multiplication-btn");
-
-  multiplicatortn.addEventListener("click", () => {
-    console.log(a * b);
-  });
-}
-
-function divider(a, b) {
-  const dividerBtn = document.querySelector("#divider-btn");
-
-  dividerBtn.addEventListener("click", () => {
-    console.log(a / b);
-  });
-}
-
-function percetage(a, b) {
-  const percetageBtn = document.querySelector("#percentage-btn");
-
-  percetageBtn.addEventListener("click", () => {
-    console.log((a * b) / 100);
-  });
-}
-
-function clearAllOperation() {
-  const clearAllBtn = document.querySelector("#ac-btn");
-
-  clearAllBtn.addEventListener("click", () => {
-    inOperation.innerHTML = "0";
-  });
-}
-
-// Eventos
-sum(10, 20);
-subtraction(10, 20);
-multiplicator(10, 20);
-divider(10, 20);
-percetage(10, 20);
