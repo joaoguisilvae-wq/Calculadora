@@ -122,6 +122,37 @@ class Calculator {
   }
 }
 
+class Header {
+  constructor(headerContainerBtns) {
+    this.headerContainerBtns = headerContainerBtns;
+  }
+
+  changeScreen(btn) {
+    this.headerContainerBtns.forEach((btn) => {
+      btn.classList.remove("focus");
+    });
+
+    btn.classList.add("focus");
+
+    const buttonText = btn.innerText.trim();
+
+    if (buttonText === "Calculadora") {
+      calculator.classList.remove("hide");
+      calculator.classList.remove("less-opacity");
+      conversorTable.classList.add("hide");
+      moreOptionsContainer.classList.add("hide");
+    } else if (buttonText === "Conversor") {
+      conversorTable.classList.remove("hide");
+      conversorTable.classList.remove("less-opacity");
+      calculator.classList.add("hide");
+      moreOptionsContainer.classList.add("hide");
+    } else {
+      moreOptionsContainer.classList.remove("hide");
+      calculator.classList.add("less-opacity");
+      conversorTable.classList.add("less-opacity");
+    }
+  }
+}
 // Seleção de elementos
 const previousOperationText = document.querySelector("#previous-operation");
 const calcTable = document.querySelector("#calculate-table");
@@ -129,8 +160,16 @@ const inOperationText = document.querySelector("#in-operation");
 const numsTable = document.querySelector("#numbers-table");
 const numsTableBtns = document.querySelectorAll("#numbers-table button");
 
+const headerContainerBtns = document.querySelectorAll(
+  "#header-container button"
+);
+const calculator = document.querySelector("#calculator");
+const conversorTable = document.querySelector("#conversor-table");
+const moreOptionsContainer = document.querySelector("#more-options-container");
+
 // Eventos
 const calc = new Calculator(previousOperationText, inOperationText);
+const header = new Header(headerContainerBtns);
 
 numsTableBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -141,5 +180,11 @@ numsTableBtns.forEach((btn) => {
     } else {
       calc.processOperations(value);
     }
+  });
+});
+
+headerContainerBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    header.changeScreen(btn);
   });
 });
