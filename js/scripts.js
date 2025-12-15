@@ -147,10 +147,16 @@ class Header {
       calculator.classList.add("hide");
       moreOptionsContainer.classList.add("hide");
     } else {
-      moreOptionsContainer.classList.remove("hide");
-      calculator.classList.add("less-opacity");
-      conversorTable.classList.add("less-opacity");
+      moreOptionsContainer.classList.toggle("hide");
+      calculator.classList.toggle("less-opacity");
+      conversorTable.classList.toggle("less-opacity");
     }
+  }
+
+  toggleTheme() {
+    toggleThemeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+    });
   }
 }
 // Seleção de elementos
@@ -166,6 +172,7 @@ const headerContainerBtns = document.querySelectorAll(
 const calculator = document.querySelector("#calculator");
 const conversorTable = document.querySelector("#conversor-table");
 const moreOptionsContainer = document.querySelector("#more-options-container");
+const toggleThemeBtn = document.querySelector("#toggle-theme-btn");
 
 // Eventos
 const calc = new Calculator(previousOperationText, inOperationText);
@@ -186,5 +193,6 @@ numsTableBtns.forEach((btn) => {
 headerContainerBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     header.changeScreen(btn);
+    header.toggleTheme(btn);
   });
 });
