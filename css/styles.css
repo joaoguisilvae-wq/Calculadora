@@ -28,12 +28,17 @@ body {
   opacity: 1;
 }
 
+.less-opacity {
+  opacity: 0.4;
+}
+
 /* Header */
 #header-container header {
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex: 1;
+  margin-bottom: 1rem;
 }
 
 #header-container button {
@@ -138,4 +143,59 @@ body {
     width: 45px;
     height: 35px;
   }
+}
+
+/* Conversor table */
+#conversor-table {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 130px);
+  gap: 30px;
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1rem;
+}
+
+#conversor-table button {
+  width: 90px;
+  height: 70px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--black-theme-color);
+  font-weight: bold;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#conversor-table button:hover {
+  opacity: 1;
+}
+
+/* More options */
+#more-options-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+}
+
+#more-options {
+  position: relative;
+}
+
+#header-container #history-btn,
+#header-container #toggle-theme-btn {
+  background-color: var(--black-theme-btn);
+  border-radius: 25px;
+  width: 200px;
+  margin: 10px;
+  position: absolute;
+  top: 10px;
+  left: 605px;
+  opacity: 1;
+}
+
+#header-container #toggle-theme-btn {
+  top: 55px;
 }
