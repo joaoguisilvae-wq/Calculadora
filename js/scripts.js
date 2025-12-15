@@ -37,22 +37,27 @@ class Calculator {
       case "+":
         operationValue = previous + current;
         this.updateScreen(operationValue, operation, current, previous);
+        this.saveInHistory();
         break;
       case "-":
         operationValue = previous - current;
         this.updateScreen(operationValue, operation, current, previous);
+        this.saveInHistory();
         break;
       case "/":
         operationValue = previous / current;
         this.updateScreen(operationValue, operation, current, previous);
+        this.saveInHistory();
         break;
       case "*":
         operationValue = previous * current;
         this.updateScreen(operationValue, operation, current, previous);
+        this.saveInHistory();
         break;
       case "%":
         operationValue = (previous * current) / 100;
         this.updateScreen(operationValue, operation, current, previous);
+        this.saveInHistory();
         break;
       case "DEL":
         this.processDelOperator();
@@ -62,6 +67,8 @@ class Calculator {
         break;
       case "=":
         this.processEqualOperator();
+        this.updateScreen(operationValue, operation);
+        this.saveInHistory();
         break;
       default:
         return;
@@ -75,8 +82,6 @@ class Calculator {
     current = null,
     previous = null
   ) {
-    console.log(operationValue, operation, current, previous);
-
     if (operationValue === null) {
       this.inOperationText.innerText += this.inOperation;
     } else {
@@ -88,6 +93,10 @@ class Calculator {
       // Colorcar o valor de current para previous
       this.previousOperationText.innerText = `${operationValue} ${operation}`;
       this.inOperationText.innerText = "";
+
+      if (operation && current !== null && previous !== null) {
+        this.saveOperationInLocal(previous, current, operation);
+      }
     }
   }
 
@@ -116,9 +125,88 @@ class Calculator {
 
   // Processar a operação
   processEqualOperator() {
-    const operation = previousOperationText.innerText.split(" ")[1];
+    const operationText = this.previousOperationText.innerText;
+    if (!operationText) return;
+
+    const parts = operationText.split(" ");
+
+    if (parts.length < 2) return;
+
+    const operation = parts[1];
 
     this.processOperations(operation);
+  }
+
+  saveOperationInLocal(previous, current, symbol) {
+    const operations = JSON.parse(localStorage.getItem("operation") || "[]");
+
+    const newOperation = {
+      previousOp: previous,
+      currentOp: current,
+      symbolOp: symbol,
+    };
+    operations.push(newOperation);
+
+    const operationInLocalStorage = localStorage.setItem(
+      "operation",
+      JSON.stringify(operations)
+    );
+  }
+
+  saveInHistory() {
+    if (!history) return;
+
+    const operations = JSON.parse(localStorage.getItem("operation") || "[]");
+
+    history.innerHTML = "";
+
+    if (!Array.isArray(operations) || operations.length === 0) {
+      history.innerHTML = "<h2>Nenhuma operação salva.</h2>";
+      return;
+    }
+
+    [...operations].reverse().forEach((op) => {
+      if (
+        typeof op.previousOp !== "number" ||
+        typeof op.currentOp !== "number" ||
+        !op.symbolOp
+      )
+        return;
+
+      const div = document.createElement("div");
+      div.classList.add("history-operation");
+
+      let operationResult;
+      switch (op.symbolOp) {
+        case "+":
+          operationResult = op.previousOp + op.currentOp;
+          break;
+        case "-":
+          operationResult = op.previousOp - op.currentOp;
+          break;
+        case "*":
+          operationResult = op.previousOp * op.currentOp;
+          break;
+        case "/":
+          operationResult = op.previousOp / op.currentOp;
+          break;
+        case "%":
+          operationResult = (op.previousOp * op.currentOp) / 100;
+          break;
+        default:
+          return;
+      }
+
+      history.appendChild(div);
+
+      const h3 = document.createElement("h3");
+      h3.textContent = `${op.previousOp} ${op.symbolOp} ${op.currentOp}`;
+      div.appendChild(h3);
+
+      const h2 = document.createElement("h2");
+      h2.textContent = `${operationResult}`;
+      div.appendChild(h2);
+    });
   }
 }
 
@@ -136,20 +224,33 @@ class Header {
 
     const buttonText = btn.innerText.trim();
 
-    if (buttonText === "Calculadora") {
-      calculator.classList.remove("hide");
-      calculator.classList.remove("less-opacity");
-      conversorTable.classList.add("hide");
-      moreOptionsContainer.classList.add("hide");
-    } else if (buttonText === "Conversor") {
-      conversorTable.classList.remove("hide");
-      conversorTable.classList.remove("less-opacity");
-      calculator.classList.add("hide");
-      moreOptionsContainer.classList.add("hide");
-    } else {
-      moreOptionsContainer.classList.toggle("hide");
-      calculator.classList.toggle("less-opacity");
-      conversorTable.classList.toggle("less-opacity");
+    switch (buttonText) {
+      case "Calculadora":
+        calculator.classList.remove("hide");
+        calculator.classList.remove("less-opacity");
+        history.classList.add("hide");
+        conversorTable.classList.add("hide");
+        moreOptionsContainer.classList.add("hide");
+        break;
+      case "Conversor":
+        conversorTable.classList.remove("hide");
+        conversorTable.classList.remove("less-opacity");
+        calculator.classList.add("hide");
+        history.classList.add("hide");
+        moreOptionsContainer.classList.add("hide");
+        break;
+      case "Histórico":
+        history.classList.remove("hide");
+        history.classList.remove("less-opacity");
+        conversorTable.classList.add("hide");
+        calculator.classList.add("hide");
+        moreOptionsContainer.classList.add("hide");
+      default:
+        moreOptionsContainer.classList.toggle("hide");
+        history.classList.toggle("less-opacity");
+        calculator.classList.toggle("less-opacity");
+        conversorTable.classList.toggle("less-opacity");
+        return;
     }
   }
 
@@ -172,6 +273,7 @@ const headerContainerBtns = document.querySelectorAll(
 const calculator = document.querySelector("#calculator");
 const conversorTable = document.querySelector("#conversor-table");
 const moreOptionsContainer = document.querySelector("#more-options-container");
+const history = document.querySelector("#history");
 const toggleThemeBtn = document.querySelector("#toggle-theme-btn");
 
 // Eventos
@@ -189,6 +291,7 @@ numsTableBtns.forEach((btn) => {
     }
   });
 });
+calc.saveInHistory();
 
 headerContainerBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
