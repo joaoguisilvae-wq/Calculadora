@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculadora</title>
+    <!-- Icones -->
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-straight/css/uicons-thin-straight.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css"
+    />
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css" />
     <!-- JS -->
@@ -12,11 +21,17 @@
   <body>
     <div id="header-container">
       <header>
-        <button id="swipe-screen">Icone</button>
+        <button id="swipe-screen">
+          <i
+            class="fi fi-ts-arrow-up-right-and-arrow-down-left-from-center"
+          ></i>
+        </button>
         <button id="calc-option" class="focus">Calculadora</button>
-        <button id="conv-options">Conversor</button>
-        <div>
-          <button id="more-options">Icone</button>
+        <button id="conv-options">Conversor</button
+        ><button id="more-options">
+          <i class="fi fi-tr-square-ellipsis-vertical"></i>
+        </button>
+        <div id="more-options-container" class="hide">
           <button id="history-btn">Histórico</button>
           <button id="toggle-theme-btn">Mudar tema</button>
         </div>
@@ -53,11 +68,57 @@
           <button class="icon operation" id="sum-btn">+</button>
         </div>
         <div class="block">
-          <button class="icon operation" id="swipe-numbers-table">Icone</button>
+          <button class="icon operation" id="swipe-numbers-table">
+            <i class="fi fi-tr-arrows-repeat"></i>
+          </button>
           <button class="number operation" id="zero">0</button>
           <button id="dot-btn operation">.</button>
           <button id="equal-btn">=</button>
         </div>
+      </div>
+    </div>
+    <div id="conversor-table">
+      <div class="conversor-theme">
+        <button><i class="fi fi-ts-coins"></i> Moeda</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-ts-laptop-code"></i> Comprimento</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-ts-equality"></i> Massa</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-tr-pencil-ruler"></i> Área</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-ts-clock-three"></i> Tempo</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-tr-money-check-edit"></i> Finanças</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-tr-envelope-open-text"></i> Dados</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-tr-calendar-minus"></i> Data</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-ts-badge-percent"></i> Desconto</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-ts-coin"></i> Volume</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-tr-arrows-repeat"></i> Sistema númerico</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-tr-running"></i> Velocidade</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-ts-temperature-high"></i> Temperatura</button>
+      </div>
+      <div class="conversor-theme">
+        <button><i class="fi fi-tr-restaurant"></i> IMC</button>
       </div>
     </div>
   </body>
