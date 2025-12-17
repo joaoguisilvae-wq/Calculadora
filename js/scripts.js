@@ -245,6 +245,7 @@ class Header {
         conversorTable.classList.add("hide");
         calculator.classList.add("hide");
         moreOptionsContainer.classList.add("hide");
+        break;
       default:
         moreOptionsContainer.classList.toggle("hide");
         history.classList.toggle("less-opacity");
@@ -252,12 +253,6 @@ class Header {
         conversorTable.classList.toggle("less-opacity");
         return;
     }
-  }
-
-  toggleTheme() {
-    toggleThemeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("light");
-    });
   }
 }
 // Seleção de elementos
@@ -280,6 +275,10 @@ const toggleThemeBtn = document.querySelector("#toggle-theme-btn");
 const calc = new Calculator(previousOperationText, inOperationText);
 const header = new Header(headerContainerBtns);
 
+toggleThemeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("light");
+});
+
 numsTableBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const value = e.target.innerText;
@@ -296,6 +295,5 @@ calc.saveInHistory();
 headerContainerBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     header.changeScreen(btn);
-    header.toggleTheme(btn);
   });
 });
