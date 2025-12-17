@@ -1,77 +1,56 @@
 // Objetos
 class Calculator {
-  constructor(previousOperationText, inOperationText) {
+  constructor(previousOperationText, inOperationText, doneOperationText) {
     this.previousOperationText = previousOperationText;
     this.inOperationText = inOperationText;
+    this.doneOperationText = doneOperationText;
     this.inOperation = "";
+    this.currentValue = "";
+    this.previousValue = "";
+    this.operation = null;
   }
 
   // Colorcar número na tela da calculadora
   addDigit(digit) {
-    // Checar se ja esxiste virgula na operação
-    if (digit === "." && this.inOperationText.innerText.includes(".")) {
-      return;
-    }
-
-    this.inOperation = digit;
-    this.updateScreen();
+    if (digit === "." && this.currentValue.includes(".")) return;
+    this.currentValue += digit;
+    this.inOperationText.innerText = this.currentValue;
   }
 
   // Processar operações
-  processOperations(operation) {
-    // Checar se o current esta vazio ou é AC
-    if (this.inOperationText.innerText === "" && operation !== "AC") {
-      if (this.previousOperationText.innerText !== "") {
-        // Mudar operação
-        this.changeOperation(operation);
-      }
+  processOperations(op) {
+    if (op === "AC") {
+      this.currentValue = "";
+      this.previousValue = 0;
+      this.operation = null;
+      this.inOperationText.innerText = "";
+      this.previousOperationText.innerText = "";
       return;
     }
 
-    // Pegar valor atual e anterior
-    let operationValue;
-    const previous = +this.previousOperationText.innerText.split(" ")[0];
-    const current = +this.inOperationText.innerText;
-
-    switch (operation) {
-      case "+":
-        operationValue = previous + current;
-        this.updateScreen(operationValue, operation, current, previous);
-        this.saveInHistory();
-        break;
-      case "-":
-        operationValue = previous - current;
-        this.updateScreen(operationValue, operation, current, previous);
-        this.saveInHistory();
-        break;
-      case "/":
-        operationValue = previous / current;
-        this.updateScreen(operationValue, operation, current, previous);
-        this.saveInHistory();
-        break;
-      case "*":
-        operationValue = previous * current;
-        this.updateScreen(operationValue, operation, current, previous);
-        this.saveInHistory();
-        break;
-      case "%":
-        operationValue = (previous * current) / 100;
-        this.updateScreen(operationValue, operation, current, previous);
-        this.saveInHistory();
-        break;
-      case "DEL":
-        this.processDelOperator();
-        break;
-      case "AC":
-        this.processAcOperator();
-        break;
-      case "=":
-        this.processEqualOperator();
-        this.updateScreen(operationValue, operation);
-        this.saveInHistory();
-        break;
-      default:
+    if (["+", "-", "*", "/", "%"].includes(op)) {
+      if (this.operation !== null) {
+        this.operation = op;
+        this.previousOperationText.innerText = `${this.previousValue} ${op}`;
         return;
+      }
+      this.previousValue = parseFloat(this.currentValue) || 0;
+      this.currentValue = "";
+      this.operation = op;
+      this.previousOperationText.innerText = `${this.previousValue} ${op}`;
+      this.inOperationText.innerText = "";
+      return;
+    }
+
+    if (op === "=") {
+      this.calculate();
+      return;
+    }
+
+    if (op === "DEL") {
+      this.currentValue = this.currentValue.slice(0, -1);
+      this.inOperationText.innerText = this.currentValue || "";
+      return;
     }
   }
 
@@ -91,7 +70,7 @@ class Calculator {
       }
 
       // Colorcar o valor de current para previous
-      this.previousOperationText.innerText = `${operationValue} ${operation}`;
+      this.previousOperationText.innerText += ` ${operation}`;
       this.inOperationText.innerText = "";
 
       if (operation && current !== null && previous !== null) {
@@ -208,6 +187,52 @@ class Calculator {
       div.appendChild(h2);
     });
   }
+
+  calculate() {
+    let result = 0;
+    const prev = parseFloat(this.previousValue);
+    const current = parseFloat(this.currentValue);
+
+    if (isNaN(prev) || isNaN(current)) return;
+
+    switch (this.operation) {
+      case "+":
+        result = prev + current;
+        break;
+      case "-":
+        result = prev - current;
+        break;
+      case "*":
+        result = prev * current;
+        break;
+      case "/":
+        if (current === 0) {
+          this.inOperationText.innerText = "Erro";
+          this.reset();
+          return;
+        }
+        result = prev / current;
+        break;
+      case "%":
+        result = (prev * current) / 100;
+        break;
+      default:
+        return;
+    }
+
+    // Atualiza a tela com o resultado
+    this.inOperationText.innerText = result;
+    this.previousOperationText.innerText = "";
+    this.doneOperationText.innerText = `${prev} ${this.operation} ${current}`;
+    // Salva a operação no localStorage
+    this.saveOperationInLocal(prev, current, this.operation);
+    this.saveInHistory(prev, current, this.operation);
+
+    // Atualiza o estado interno
+    this.currentValue = result.toString();
+    this.previousValue = 0;
+    this.operation = null;
+  }
 }
 
 class Header {
@@ -256,6 +281,7 @@ class Header {
   }
 }
 // Seleção de elementos
+const doneOperationText = document.querySelector("#done-operation");
 const previousOperationText = document.querySelector("#previous-operation");
 const calcTable = document.querySelector("#calculate-table");
 const inOperationText = document.querySelector("#in-operation");
@@ -272,7 +298,11 @@ const history = document.querySelector("#history");
 const toggleThemeBtn = document.querySelector("#toggle-theme-btn");
 
 // Eventos
-const calc = new Calculator(previousOperationText, inOperationText);
+const calc = new Calculator(
+  previousOperationText,
+  inOperationText,
+  doneOperationText
+);
 const header = new Header(headerContainerBtns);
 
 toggleThemeBtn.addEventListener("click", () => {

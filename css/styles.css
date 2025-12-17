@@ -7,13 +7,15 @@
   --icon-color: #fc930a;
   --equal-theme-color: #fc930a;
   --equal-color: #fff;
+  --previous-theme: #444;
 }
 
 body.light {
   --black-theme--background: #ccc;
   --black-theme-color: #111;
   --black-theme-history: #bbb;
-  --black-theme-btn: #bbb;
+  --black-theme-btn: #bbbb;
+  --previous-theme: #aaa;
 }
 
 /* Geral */
@@ -84,6 +86,10 @@ body {
 }
 
 #calculate-table #previous-operation {
+  color: var(--previous-theme);
+}
+
+#calculate-table #done-operation {
   color: var(--black-theme-history);
 }
 
