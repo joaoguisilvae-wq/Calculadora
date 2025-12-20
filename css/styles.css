@@ -1,20 +1,21 @@
 /* Root */
 :root {
-  --black-theme--background: #111;
-  --black-theme-color: #fff;
-  --black-theme-history: #333;
-  --black-theme-btn: #333;
+  --theme--background: #111;
+  --theme-color: #fff;
+  --theme-history: #333;
+  --theme-btn: #333;
   --icon-color: #fc930a;
   --equal-theme-color: #fc930a;
   --equal-color: #fff;
   --previous-theme: #444;
+  --button-active: #444;
 }
 
 body.light {
-  --black-theme--background: #ccc;
-  --black-theme-color: #111;
-  --black-theme-history: #bbb;
-  --black-theme-btn: #bbbb;
+  --theme--background: #ccc;
+  --theme-color: #111;
+  --theme-history: #bbb;
+  --theme-btn: #8d8d8dbb;
   --previous-theme: #aaa;
 }
 
@@ -25,8 +26,8 @@ body.light {
 }
 
 body {
-  background-color: var(--black-theme--background);
-  color: var(--black-theme-color);
+  background-color: var(--theme--background);
+  color: var(--theme-color);
   height: 100dvh;
 }
 
@@ -41,6 +42,10 @@ body {
 .less-opacity {
   opacity: 0.4;
   transition: 0.4s;
+}
+
+.click {
+  color: #fc930a;
 }
 
 /* Header */
@@ -63,7 +68,7 @@ body {
 #header-container button {
   background: none;
   border: none;
-  color: var(--black-theme-color);
+  color: var(--theme-color);
   padding: 10px;
   font-size: 1rem;
   opacity: 0.5;
@@ -77,7 +82,7 @@ body {
   flex-direction: column;
   align-items: end;
   justify-content: space-between;
-  color: var(--black-theme-color);
+  color: var(--theme-color);
   padding: 0 100px;
   margin: 20px 0;
   height: 400px;
@@ -90,7 +95,7 @@ body {
 }
 
 #calculate-table #done-operation {
-  color: var(--black-theme-history);
+  color: var(--theme-history);
 }
 
 #calculate-table #in-operation {
@@ -110,19 +115,18 @@ body {
 #numbers-table button {
   width: 110px;
   height: 70px;
-  background-color: var(--black-theme-btn);
+  background-color: var(--theme-btn);
   border-radius: 25px;
   border: none;
   font-size: 1.5rem;
-  color: var(--black-theme-color);
+  color: var(--theme-color);
   font-weight: bold;
-  opacity: 0.9;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.1s;
 }
 
-#numbers-table button:hover {
-  opacity: 1;
+#numbers-table button:active {
+  background-color: var(--button-active);
 }
 
 #numbers-table .block {
@@ -160,7 +164,7 @@ body {
   background: none;
   border: none;
   font-size: 1.2rem;
-  color: var(--black-theme-color);
+  color: var(--theme-color);
   font-weight: bold;
   opacity: 0.9;
   cursor: pointer;
@@ -176,7 +180,7 @@ body {
   position: absolute;
   top: 70%;
   right: 145px;
-  background-color: var(--black-theme--background);
+  background-color: var(--theme--background);
   border-radius: 10px;
   padding: 10px;
   display: flex;
@@ -186,10 +190,10 @@ body {
 }
 
 #more-options-container button {
-  background-color: var(--black-theme-btn);
+  background-color: var(--theme-btn);
   border: none;
   border-radius: 25px;
-  color: var(--black-theme-color);
+  color: var(--theme-color);
   padding: 8px 16px;
   cursor: pointer;
   font-weight: bold;
@@ -206,7 +210,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: end;
-  color: var(--black-theme-color);
+  color: var(--theme-color);
   padding-right: 100px;
   margin: 20px 0;
   font-size: 1.1rem;
@@ -216,6 +220,166 @@ body {
   margin: 15px;
   text-align: end;
   gap: 15px;
+}
+
+/* conversor-tables */
+.conversor {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 65%;
+  margin: 0 auto;
+}
+
+.conversor #numbers-table {
+  margin-top: 100px;
+}
+
+.header-div {
+  display: flex;
+  justify-content: center;
+  width: 45%;
+  margin: 10px 0 15px;
+  position: relative;
+  border-bottom: 1px solid var(--button-active);
+}
+
+.header-div .return {
+  background: none;
+  border: none;
+  color: var(--theme-color);
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 7px;
+}
+
+#options-container {
+  margin: 35px 0;
+  font-size: 1.5rem;
+  height: 200px;
+  align-items: center;
+  text-align: center;
+}
+
+.form-control select {
+  background: transparent;
+  border: 1px solid var(--theme--background);
+  outline: none;
+  box-shadow: none;
+  margin-right: 350px;
+  margin-bottom: 10px;
+  color: var(--theme-color);
+  font-size: 1.2rem;
+}
+
+.result {
+  cursor: pointer;
+}
+
+/* date-table */
+#date-input h2 {
+  margin-bottom: 15px;
+}
+
+#difference-container {
+  background-color: var(--theme-btn);
+  width: 40%;
+  height: 250px;
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 20px;
+  font-size: 2rem;
+  margin-top: 10px;
+}
+
+/* Discount calculator */
+#discount-calculator .form-control {
+  display: flex;
+}
+
+#discount-calculator .form-control h3 {
+  margin-right: 350px;
+  margin-bottom: 15px;
+}
+
+#discount-calculator #discount span {
+  margin-left: 10px;
+}
+
+#discount-calculator #final-price span {
+  margin-left: 35px;
+}
+
+#discount-calculator p {
+  color: var(--button-active);
+}
+
+#discount-calculator #numbers-table {
+  margin-top: 10px;
+}
+
+/* IMC calculator */
+#imc-calculator {
+  font-size: 2rem;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+#form form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  border-bottom: 1px solid var(--button-active);
+  padding-bottom: 60px;
+}
+
+#form-control {
+  display: flex;
+  text-align: center;
+  margin-left: 100px;
+}
+
+#imc-calculator .form-control {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 20px 0px;
+  text-align: left;
+}
+
+#form form input {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 15px;
+  border-bottom: 1px solid var(--button-active);
+}
+
+#about {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+
+#about h4 {
+  margin: 10px auto 20px;
+}
+
+#imc-calculator button[type="submit"] {
+  width: 40%;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  margin: 40px;
+  background-color: var(--equal-theme-color);
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--theme-color);
 }
 
 /* Media query */

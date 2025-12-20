@@ -13,6 +13,14 @@
       rel="stylesheet"
       href="https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+    />
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css" />
     <!-- JS -->
@@ -38,7 +46,7 @@
       </header>
     </div>
     <div id="history" class="hide"></div>
-    <div id="calculator">
+    <div id="calculator" class="hide">
       <div id="calculate-table">
         <div id="done-operation"></div>
         <div id="previous-operation"></div>
@@ -125,24 +133,27 @@
     </div>
     <div id="conversor-coin" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Moeda</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-coin" id="first-coin">
+            <option value="first-coin">akkgjhfjhgrytdfrtyfdhj</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-coin" id="second-coin">
+            <option value="second-coin">akkgjhfjhgrytdfrtyfdhj</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="third-coin" id="third-coin">
+            <option value="third-coin">akkgjhfjhgrytdfrtyfdhj</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -180,21 +191,23 @@
         </div>
       </div>
     </div>
-    <div id="conversor-length" class="conversor">
+    <div id="conversor-length" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Comprimento</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-length" id="first-length">
+            <option value="first-length">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-length" id="second-length">
+            <option value="second-length">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -232,21 +245,23 @@
         </div>
       </div>
     </div>
-    <div id="conversor-mass" class="conversor">
+    <div id="conversor-mass" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Massa</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-mass" id="first-mass">
+            <option value="first-mass">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-mass" id="second-mass">
+            <option value="second-mass">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -284,21 +299,23 @@
         </div>
       </div>
     </div>
-    <div id="conversor-area" class="conversor">
+    <div id="conversor-area" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Área</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-area" id="first-area">
+            <option value="first-area">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-area" id="second-area">
+            <option value="second-area">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -336,21 +353,23 @@
         </div>
       </div>
     </div>
-    <div id="conversor-time" class="conversor">
+    <div id="conversor-time" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Tempo</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-time" id="first-time">
+            <option value="first-time">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-time" id="second-time">
+            <option value="second-time">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -388,9 +407,9 @@
         </div>
       </div>
     </div>
-    <div id="finance-calculator" class="conversor">
+    <div id="finance-calculator" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Finanças</h2>
       </div>
       <div id="loan-container">
@@ -457,21 +476,23 @@
         <button type="submit">Calcular</button>
       </div>
     </div>
-    <div id="conversor-data" class="conversor">
+    <div id="conversor-data" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Dados</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-data" id="first-data">
+            <option value="first-data">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-data" id="second-data">
+            <option value="second-data">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -509,17 +530,17 @@
         </div>
       </div>
     </div>
-    <div id="conversor-date" class="conversor">
+    <div id="conversor-date" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Data</h2>
       </div>
       <div id="date-input">
-        <h2><span>De</span></h2>
-        <h2><span>Até</span></h2>
+        <h2><span>De </span></h2>
+        <h2><span>Até </span></h2>
       </div>
+      <h2>Diferença</h2>
       <div id="difference-container">
-        <h2>Diferença</h2>
         <div class="date">
           <p>Anos</p>
           <span>0</span>
@@ -534,26 +555,32 @@
         </div>
       </div>
     </div>
-    <div id="discount-calculator" class="conversor">
+    <div id="discount-calculator" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Desconto</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
           <h3>Preço original</h3>
-          <div id="original-price"></div>
+          <div id="original-price">
+            <span>3</span>
+          </div>
         </div>
         <div class="form-control">
           <h3>Disconto (%)</h3>
-          <div id="discount"></div>
+          <div id="discount">
+            <span>2</span>
+          </div>
         </div>
         <div class="form-control">
-          <h3>
-            <div id="final-price"></div>
-          </h3>
+          <h3>Preço final</h3>
+          <div id="final-price">
+            <span>1</span>
+          </div>
         </div>
       </div>
+      <p>Economia de 0</p>
       <div id="numbers-table">
         <div class="block">
           <button class="number operation" id="seven">7</button>
@@ -581,21 +608,23 @@
         </div>
       </div>
     </div>
-    <div id="conversor-volume" class="conversor">
+    <div id="conversor-volume" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Volume</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-volume" id="first-volume">
+            <option value="first-volume">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-volume" id="second-volume">
+            <option value="second-volume">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -633,18 +662,18 @@
         </div>
       </div>
     </div>
-    <div id="number-sistem" class="conversor">
+    <div id="number-sistem" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Sistema numérico</h2>
       </div>
       <div id="options-container">
-        <select>
-          <option><span>a</span></option>
+        <select name="first-number" id="first-number">
+          <option value="first-number">a</option>
         </select>
         <span class="result">a</span>
-        <select>
-          <option><span>b</span></option>
+        <select name="second-number" id="second-number">
+          <option value="second-number">b</option>
         </select>
         <span class="result">a</span>
       </div>
@@ -681,21 +710,23 @@
         </div>
       </div>
     </div>
-    <div id="conversor-velocity" class="conversor">
+    <div id="conversor-velocity" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Velocidade</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-velocity" id="first-velocity">
+            <option value="first-velocity">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-velocity" id="second-velocity">
+            <option value="second-velocity">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -733,21 +764,23 @@
         </div>
       </div>
     </div>
-    <div id="conversor-temperature" class="conversor">
+    <div id="conversor-temperature" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Temperatura</h2>
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="first-temperature" id="first-temperature">
+            <option value="first-temperature">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
         <div class="form-control">
-          <select>
-            <option><span>a</span></option></select
-          ><span class="result">a</span>
+          <select name="second-temperature" id="second-temperature">
+            <option value="second-temperature">a</option>
+          </select>
+          <span class="result">a</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -785,35 +818,57 @@
         </div>
       </div>
     </div>
-    <div id="imc-calculator" class="conversor">
+    <div id="imc-calculator" class="conversor hide">
       <div class="header-div">
-        <button class="return"></button>
+        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>IMC</h2>
       </div>
       <div id="form">
         <form>
-          <label for="age">Idade</label>
-          <input type="text" name="age" id="age" placeholder="Inserir idade" />
-          <label for="gender">Genero:</label>
-          <input type="checkbox" name="gender" id="masculine" />
-          <input type="checkbox" name="gender" id="feminine" />
-          <label for="weight">Peso (kg)</label>
-          <input
-            type="text"
-            id="weight"
-            name="weight"
-            placeholder="Inserir peso"
-          />
+          <div id="form-control">
+            <div class="form-control">
+              <label for="age">Idade</label>
+              <input
+                type="text"
+                name="age"
+                id="age"
+                placeholder="Inserir idade"
+              />
+            </div>
+            <div class="form-control">
+              <label for="gender">Genero:</label>
+              <input type="checkbox" name="gender" id="masculine" />
+              <input type="checkbox" name="gender" id="feminine" />
+            </div>
+          </div>
+          <div class="form-control">
+            <label for="height">Altura (cm)</label>
+            <input
+              type="text"
+              id="height"
+              name="height"
+              placeholder="Inserir altura"
+            />
+          </div>
+          <div class="form-control">
+            <label for="weight">Peso (kg)</label>
+            <input
+              type="text"
+              id="weight"
+              name="weight"
+              placeholder="Inserir peso"
+            />
+          </div>
         </form>
         <div id="about">
-          <h4>Sobre o imc</h4>
+          <h4>Sobre o IMC</h4>
           <p>
             O IMC (Índice de Massa Corporal) é uma medida usada para verificar
             se o seu peso está adequado à sua altura, calculado dividindo o peso
             (em kg) pela altura (em metros) ao quadrado.
           </p>
         </div>
-        <button id="submit">Calcular</button>
+        <button type="submit">Calcular</button>
       </div>
     </div>
   </body>
