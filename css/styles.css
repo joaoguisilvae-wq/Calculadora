@@ -9,6 +9,7 @@
   --equal-color: #fff;
   --previous-theme: #444;
   --button-active: #444;
+  --percentage-in-conversor: #fc930a65;
 }
 
 body.light {
@@ -236,6 +237,16 @@ option {
   justify-content: space-around;
   width: 65%;
   margin: 0 auto;
+}
+
+.conversor #percentage-btn {
+  opacity: 0.8;
+  color: var(--percentage-in-conversor);
+}
+
+.conversor #percentage-btn:active {
+  background-color: var(--theme-btn);
+  scale: 1;
 }
 
 .conversor #numbers-table {
