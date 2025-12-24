@@ -36,7 +36,7 @@
         </button>
         <button id="calc-option" class="focus">Calculadora</button>
         <button id="conv-options">Conversor</button
-        ><button id="more-options">
+        ><button id="more-options" data-action="more-options">
           <i class="fi fi-tr-square-ellipsis-vertical"></i>
         </button>
         <div id="more-options-container" class="hide">
@@ -89,46 +89,74 @@
     </div>
     <div id="conversor-table" class="hide">
       <div class="conversor-theme">
-        <button><i class="fi fi-ts-coins"></i> Moeda</button>
+        <button data-target="conversor-coin">
+          <i class="fi fi-ts-coins"></i> Moeda
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-ts-laptop-code"></i> Comprimento</button>
+        <button data-target="conversor-length">
+          <i class="fi fi-ts-laptop-code"></i> Comprimento
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-ts-equality"></i> Massa</button>
+        <button data-target="conversor-mass">
+          <i class="fi fi-ts-equality"></i> Massa
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-tr-pencil-ruler"></i> Área</button>
+        <button data-target="conversor-area">
+          <i class="fi fi-tr-pencil-ruler"></i> Área
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-ts-clock-three"></i> Tempo</button>
+        <button data-target="conversor-time">
+          <i class="fi fi-ts-clock-three"></i> Tempo
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-tr-money-check-edit"></i> Finanças</button>
+        <button data-target="finance-calculator">
+          <i class="fi fi-tr-money-check-edit"></i> Finanças
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-tr-envelope-open-text"></i> Dados</button>
+        <button data-target="conversor-data">
+          <i class="fi fi-tr-envelope-open-text"></i> Dados
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-tr-calendar-minus"></i> Data</button>
+        <button data-target="conversor-date">
+          <i class="fi fi-tr-calendar-minus"></i> Data
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-ts-badge-percent"></i> Desconto</button>
+        <button data-target="discount-calculator">
+          <i class="fi fi-ts-badge-percent"></i> Desconto
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-ts-coin"></i> Volume</button>
+        <button data-target="conversor-volume">
+          <i class="fi fi-ts-coin"></i> Volume
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-tr-arrows-repeat"></i> Sistema númerico</button>
+        <button data-target="number-sistem">
+          <i class="fi fi-tr-arrows-repeat"></i> Sistema numérico
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-tr-running"></i> Velocidade</button>
+        <button data-target="conversor-velocity">
+          <i class="fi fi-tr-running"></i> Velocidade
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-ts-temperature-high"></i> Temperatura</button>
+        <button data-target="conversor-temperature">
+          <i class="fi fi-ts-temperature-high"></i> Temperatura
+        </button>
       </div>
       <div class="conversor-theme">
-        <button><i class="fi fi-tr-restaurant"></i> IMC</button>
+        <button data-target="imc-calculator">
+          <i class="fi fi-tr-restaurant"></i> IMC
+        </button>
       </div>
     </div>
     <div id="conversor-coin" class="conversor hide">
@@ -139,21 +167,21 @@
       <div id="options-container">
         <div class="form-control">
           <select name="first-coin" id="first-coin">
-            <option value="first-coin">akkgjhfjhgrytdfrtyfdhj</option>
+            <option value="first-coin">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-coin" id="second-coin">
-            <option value="second-coin">akkgjhfjhgrytdfrtyfdhj</option>
+            <option value="second-coin">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="third-coin" id="third-coin">
-            <option value="third-coin">akkgjhfjhgrytdfrtyfdhj</option>
+            <option value="third-coin">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -201,13 +229,13 @@
           <select name="first-length" id="first-length">
             <option value="first-length">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-length" id="second-length">
             <option value="second-length">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -255,13 +283,13 @@
           <select name="first-mass" id="first-mass">
             <option value="first-mass">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-mass" id="second-mass">
             <option value="second-mass">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -309,13 +337,13 @@
           <select name="first-area" id="first-area">
             <option value="first-area">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-area" id="second-area">
             <option value="second-area">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -363,13 +391,13 @@
           <select name="first-time" id="first-time">
             <option value="first-time">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-time" id="second-time">
             <option value="second-time">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -414,7 +442,7 @@
       </div>
       <div id="loan-container">
         <h3>Principal</h3>
-        <input type="number" placeholder="Inserir valor" />
+        <input type="number" name="value" placeholder="Inserir valor" />
         <div id="btns-div">
           <button id="emprestimo">Empréstimo</button>
           <button id="investimento">Investimento</button>
@@ -424,7 +452,7 @@
           <input
             type="number"
             placeholder="4.85"
-            value="4,85"
+            value="4.85"
             id="interest-rate"
             name="interest-rate"
           />
@@ -438,7 +466,7 @@
       </div>
       <div id="investment-container">
         <h3>Investimento Total</h3>
-        <input type="number" placeholder="Inserir valor" />
+        <input type="number" name="value" placeholder="Inserir valor" />
         <div id="btns-div">
           <button id="emprestimo">Empréstimo</button>
           <button id="investimento">Investimento</button>
@@ -448,9 +476,9 @@
           <input
             type="number"
             placeholder="4.85"
-            value="4,85"
-            id="interest-rate"
-            name="interest-rate"
+            value="4.85"
+            id="rate-interest"
+            name="rate-interest"
           />
         </div>
         <div class="form-control">
@@ -486,13 +514,13 @@
           <select name="first-data" id="first-data">
             <option value="first-data">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-data" id="second-data">
             <option value="second-data">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -564,23 +592,23 @@
         <div class="form-control">
           <h3>Preço original</h3>
           <div id="original-price">
-            <span>3</span>
+            <span>100</span>
           </div>
         </div>
         <div class="form-control">
           <h3>Disconto (%)</h3>
           <div id="discount">
-            <span>2</span>
+            <span>10</span>
           </div>
         </div>
         <div class="form-control">
           <h3>Preço final</h3>
           <div id="final-price">
-            <span>1</span>
+            <span>90</span>
           </div>
         </div>
       </div>
-      <p>Economia de 0</p>
+      <p>Economia de 10</p>
       <div id="numbers-table">
         <div class="block">
           <button class="number operation" id="seven">7</button>
@@ -618,13 +646,13 @@
           <select name="first-volume" id="first-volume">
             <option value="first-volume">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-volume" id="second-volume">
             <option value="second-volume">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -671,11 +699,11 @@
         <select name="first-number" id="first-number">
           <option value="first-number">a</option>
         </select>
-        <span class="result">a</span>
+        <span class="result">1</span>
         <select name="second-number" id="second-number">
           <option value="second-number">b</option>
         </select>
-        <span class="result">a</span>
+        <span class="result">1</span>
       </div>
       <div id="numbers-table">
         <div class="block">
@@ -720,13 +748,13 @@
           <select name="first-velocity" id="first-velocity">
             <option value="first-velocity">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-velocity" id="second-velocity">
             <option value="second-velocity">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -774,13 +802,13 @@
           <select name="first-temperature" id="first-temperature">
             <option value="first-temperature">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
         <div class="form-control">
           <select name="second-temperature" id="second-temperature">
             <option value="second-temperature">a</option>
           </select>
-          <span class="result">a</span>
+          <span class="result">1</span>
         </div>
       </div>
       <div id="numbers-table">
@@ -836,9 +864,11 @@
               />
             </div>
             <div class="form-control">
-              <label for="gender">Genero:</label>
-              <input type="checkbox" name="gender" id="masculine" />
-              <input type="checkbox" name="gender" id="feminine" />
+              <label
+                >Genero:
+                <input type="checkbox" name="gender" id="masculine" />
+                <input type="checkbox" name="gender" id="feminine" />
+              </label>
             </div>
           </div>
           <div class="form-control">

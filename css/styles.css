@@ -12,7 +12,7 @@
 }
 
 body.light {
-  --theme--background: #ccc;
+  --theme--background: #ddd;
   --theme-color: #111;
   --theme-history: #bbb;
   --theme-btn: #8d8d8dbb;
@@ -37,6 +37,11 @@ body {
 
 #header-container .focus {
   opacity: 1;
+  scale: 1.1;
+}
+
+option {
+  color: #333;
 }
 
 .less-opacity {
@@ -127,6 +132,7 @@ body {
 
 #numbers-table button:active {
   background-color: var(--button-active);
+  scale: 1.03;
 }
 
 #numbers-table .block {
