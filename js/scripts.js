@@ -10,14 +10,12 @@ class Calculator {
     this.operation = null;
   }
 
-  // Colorcar número na tela da calculadora
   addDigit(digit) {
     if (digit === "." && this.currentValue.includes(".")) return;
     this.currentValue += digit;
     this.inOperationText.innerText = this.currentValue;
   }
 
-  // Processar operações
   processOperations(op) {
     if (op === "AC") {
       this.currentValue = "";
@@ -54,7 +52,6 @@ class Calculator {
     }
   }
 
-  // Atulaizar tela da calculadora
   updateScreen(
     operationValue = null,
     operation = null,
@@ -64,12 +61,10 @@ class Calculator {
     if (operationValue === null) {
       this.inOperationText.innerText += this.inOperation;
     } else {
-      // Se previous = 0, adicionar current
       if (previous === 0) {
         operationValue = current;
       }
 
-      // Colorcar o valor de current para previous
       this.previousOperationText.innerText += ` ${operation}`;
       this.inOperationText.innerText = "";
 
@@ -79,30 +74,22 @@ class Calculator {
     }
   }
 
-  // Mudar operação
   changeOperation(operation) {
     const mathOperations = ["*", "/", "+", "-"];
-
-    if (!mathOperations.includes(operation)) {
-      return;
-    }
-
+    if (!mathOperations.includes(operation)) return;
     this.previousOperationText.innerText =
       this.previousOperationText.innerText.slice(0, -1) + operation;
   }
 
-  // Deletando operação atual
   processDelOperator() {
     this.inOperationText.innerText = "";
   }
 
-  // Deletando operações atuais
   processAcOperator() {
     this.previousOperationText.innerText = "";
     this.inOperationText.innerText = "";
   }
 
-  // Processar a operação
   processEqualOperator() {
     const operationText = this.previousOperationText.innerText;
     if (!operationText) return;
@@ -125,11 +112,7 @@ class Calculator {
       symbolOp: symbol,
     };
     operations.push(newOperation);
-
-    const operationInLocalStorage = localStorage.setItem(
-      "operation",
-      JSON.stringify(operations)
-    );
+    localStorage.setItem("operation", JSON.stringify(operations));
   }
 
   saveInHistory() {
@@ -220,21 +203,26 @@ class Calculator {
         return;
     }
 
-    // Atualiza a tela com o resultado
     this.inOperationText.innerText = result;
     this.previousOperationText.innerText = "";
     this.doneOperationText.innerText = `${prev} ${this.operation} ${current}`;
-    // Salva a operação no localStorage
-    this.saveOperationInLocal(prev, current, this.operation);
-    this.saveInHistory(prev, current, this.operation);
 
-    // Atualiza o estado interno
+    this.saveOperationInLocal(prev, current, this.operation);
+    this.saveInHistory();
     this.currentValue = result.toString();
     this.previousValue = 0;
     this.operation = null;
   }
-}
 
+  reset() {
+    this.currentValue = "";
+    this.previousValue = 0;
+    this.operation = null;
+    this.inOperationText.innerText = "";
+    this.previousOperationText.innerText = "";
+    this.doneOperationText.innerText = "";
+  }
+}
 class Header {
   constructor(headerContainerBtns) {
     this.headerContainerBtns = headerContainerBtns;
@@ -246,11 +234,7 @@ class Header {
     );
 
     const isMoreOptionsBtn = btn.dataset.action === "more-options";
-
-    if (isOnConversorDetail && !isMoreOptionsBtn) {
-      return;
-    }
-
+    if (isOnConversorDetail && !isMoreOptionsBtn) return;
     this.headerContainerBtns.forEach((b) => b.classList.remove("focus"));
     btn.classList.add("focus");
 
@@ -289,12 +273,140 @@ class Header {
           section.classList.toggle("less-opacity")
         );
         conversorTable.classList.toggle("less-opacity");
+        returnBTn.forEach((retBtn) => {
+          retBtn.classList.toggle("hide");
+        });
         return;
     }
   }
 }
 
-class Conversor {
+class Conversors {
+  constructor(containerId, config) {
+    this.container = document.querySelector(containerId);
+    this.rates = config.rates || {};
+    this.labels = config.labels || {};
+    this.activeIndex = 0;
+
+    this.updateConversorScreen();
+  }
+
+  updateConversorScreen() {
+    const results = this.container.querySelectorAll(".result");
+    const selects = this.container.querySelectorAll(
+      "#options-container select"
+    );
+
+    selects.forEach((select) => {
+      select.innerHTML = "";
+      Object.keys(this.rates).forEach((unit) => {
+        const opt = document.createElement("option");
+        opt.value = unit;
+        opt.textContent = this.getUnitLabel(unit);
+        select.appendChild(opt);
+      });
+      select.value = Object.keys(this.rates)[0];
+    });
+
+    if (results[0]) {
+      results[0].classList.add("click");
+      results[0].textContent = "1";
+    }
+
+    results.forEach((result, i) => {
+      result.addEventListener("click", () => {
+        results.forEach((r) => r.classList.remove("click"));
+
+        result.classList.add("click");
+        result.textContent = "1";
+
+        this.activeIndex = i;
+        this.handleConversion();
+      });
+    });
+
+    selects.forEach((select) => {
+      select.addEventListener("change", () => this.handleConversion());
+    });
+  }
+
+  getUnitLabel(unit) {
+    return this.labels[unit] || unit;
+  }
+
+  convert(value, from, to) {
+    if (from === to) return parseFloat(value);
+
+    const fromRate = this.rates[from];
+    const toRate = this.rates[to];
+
+    const valueInBase = parseFloat(value) / fromRate;
+
+    return valueInBase * toRate;
+  }
+
+  handleConversion() {
+    const selects = this.container.querySelectorAll(
+      "#options-container select"
+    );
+    const results = this.container.querySelectorAll(".result");
+
+    const activeResult = results[this.activeIndex];
+
+    const fromValue = parseFloat(activeResult?.textContent) || 1;
+    const fromUnit = selects[this.activeIndex]?.value;
+
+    if (!fromUnit) return;
+
+    results.forEach((result, i) => {
+      if (i === this.activeIndex) return;
+
+      const toUnit = selects[i]?.value;
+
+      if (!toUnit) return;
+
+      const converted = this.convert(fromValue, fromUnit, toUnit);
+      result.textContent = isNaN(converted)
+        ? "0"
+        : converted.toFixed(6).replace(/\.?0+$/, "");
+    });
+  }
+
+  updateActiveValue(digit) {
+    const results = this.container.querySelectorAll(".result");
+    const activeResult = Array.from(results).find((result) =>
+      result.classList.contains("click")
+    );
+
+    if (!activeResult) return;
+
+    let currentValue = activeResult.textContent.trim();
+
+    if (digit === "DEL") {
+      currentValue = currentValue.slice(0, -1);
+      if (currentValue === "" || currentValue === "0") currentValue = "1";
+    } else if (digit === "AC") {
+      currentValue = "1";
+    } else if (digit === ".") {
+      if (currentValue.includes(".")) return;
+      if (currentValue === "1") currentValue = "1.";
+      else currentValue += ".";
+    } else if (!isNaN(digit)) {
+      if (currentValue === "1") {
+        currentValue = digit;
+      } else {
+        currentValue += digit;
+      }
+    } else {
+      return;
+    }
+
+    activeResult.textContent = currentValue;
+    this.handleConversion();
+  }
+}
+
+class ConversorCoin {
   constructor(
     conversorTable,
     conversorTablebtns,
@@ -313,6 +425,7 @@ class Conversor {
       const response = await fetch(
         "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD"
       );
+
       const data = await response.json();
 
       if (!data.conversion_rates) {
@@ -321,14 +434,13 @@ class Conversor {
 
       this.rates = data.conversion_rates;
       this.rates["USD"] = 1.0;
-
-      this.handleConversion();
+      this.handleCoinConversor();
     } catch (err) {
       console.error("Erro ao carregar cotações:", err);
     }
   }
 
-  convert(value, from, to) {
+  convertCoin(value, from, to) {
     if (from === to) return parseFloat(value);
 
     const fromRate = this.rates[from];
@@ -344,19 +456,18 @@ class Conversor {
     }
   }
 
-  handleConversion() {
+  handleCoinConversor() {
     const selects = document.querySelectorAll(
       "#conversor-coin #options-container select"
     );
-    const conversorResultBtn = document.querySelectorAll(
-      "#conversor-coin .result"
-    );
+    const results = document.querySelectorAll("#conversor-coin .result");
 
-    if (selects.length !== 3 || conversorResultBtn.length !== 3) return;
+    if (selects.length !== 3 || results.length !== 3) return;
 
     let activeIndex = -1;
-    for (let i = 0; i < conversorResultBtn.length; i++) {
-      if (conversorResultBtn[i].classList.contains("click")) {
+
+    for (let i = 0; i < results.length; i++) {
+      if (results[i].classList.contains("click")) {
         activeIndex = i;
         break;
       }
@@ -365,40 +476,45 @@ class Conversor {
     if (activeIndex === -1) activeIndex = 0;
 
     const fromCurrency = selects[activeIndex].value;
-    const fromValue =
-      parseFloat(conversorResultBtn[activeIndex].innerText) || 1.0;
+    const fromValue = parseFloat(results[activeIndex].innerText) || 1.0;
 
     for (let i = 0; i < 3; i++) {
       if (i === activeIndex) continue;
 
       const toCurrency = selects[i].value;
-      const converted = this.convert(fromValue, fromCurrency, toCurrency);
-
+      const converted = this.convertCoin(fromValue, fromCurrency, toCurrency);
       if (!isNaN(converted)) {
-        conversorResultBtn[i].innerText = converted.toFixed(4);
+        results[i].innerText = converted.toFixed(4);
       }
     }
   }
 
-  updateConversorScreen() {
+  updateConversorCoinScreen() {
     const results = document.querySelectorAll("#conversor-coin .result");
     const selects = document.querySelectorAll(
       "#conversor-coin #options-container select"
     );
 
-    results.forEach((result) =>
-      result.addEventListener("click", (e) => {
+    results.forEach((result) => {
+      result.addEventListener("click", () => {
         results.forEach((result) => result.classList.remove("click"));
 
         result.classList.add("click");
         this.activeResult = result;
-        this.handleConversion();
-      })
-    );
+        this.handleCoinConversor();
+      });
+    });
 
     selects.forEach((select) => {
       select.addEventListener("change", () => {
-        this.handleConversion();
+        this.handleCoinConversor();
+      });
+    });
+
+    results.forEach((result) => {
+      result.addEventListener("click", () => {
+        result.innerText = "1";
+        this.handleCoinConversor();
       });
     });
   }
@@ -414,6 +530,7 @@ class Conversor {
       const response = await fetch(
         "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD"
       );
+
       const data = await response.json();
 
       if (!data.conversion_rates) {
@@ -608,9 +725,9 @@ class Conversor {
       const firstResult = document.querySelector("#conversor-coin .result");
       if (firstResult) {
         firstResult.classList.add("click");
-        firstResult.innerText = "1.00";
+        firstResult.innerText = "1";
         this.activeResult = firstResult;
-        this.handleConversion();
+        this.handleCoinConversor();
       }
     } catch (err) {
       console.error("Erro ao carregar moedas:", err);
@@ -618,7 +735,12 @@ class Conversor {
   }
 }
 
-// Seleção de elementos
+class IMC {
+  constructor(imcTable, imcTableBtns) {
+    (this.imcTable = imcTable), (this.imcTableBtns = imcTableBtns);
+  }
+}
+
 const doneOperationText = document.querySelector("#done-operation");
 const previousOperationText = document.querySelector("#previous-operation");
 const calcTable = document.querySelector("#calculate-table");
@@ -638,16 +760,159 @@ const toggleThemeBtn = document.querySelector("#toggle-theme-btn");
 const conversorTablebtns = document.querySelectorAll("#conversor-table button");
 const conversors = document.querySelectorAll(".conversor");
 const returnBTn = document.querySelectorAll(".return");
-const conversorResultBtn = document.querySelectorAll(".conversor .result");
+const results = document.querySelectorAll(".conversor .result");
 
-// Eventos
 const calc = new Calculator(
   previousOperationText,
   inOperationText,
   doneOperationText
 );
+
 const header = new Header(headerContainerBtns);
-const convOperations = new Conversor(conversorTable, conversorTablebtns);
+const convCoinsOperations = new ConversorCoin(
+  conversorTable,
+  conversorTablebtns
+);
+
+let conversorsInstances = {};
+
+document.addEventListener("DOMContentLoaded", () => {
+  conversorsInstances.length = new Conversors("#conversor-length", {
+    rates: {
+      m: 1,
+      km: 0.001,
+      cm: 100,
+      mm: 1000,
+      in: 39.3701,
+      ft: 3.28084,
+      yd: 1.09361,
+      mi: 0.000621371,
+    },
+    labels: {
+      m: "Metro (m)",
+      km: "Quilômetro (km)",
+      cm: "Centímetro (cm)",
+      mm: "Milímetro (mm)",
+      in: "Polegada (in)",
+      ft: "Pé (ft)",
+      yd: "Jarda (yd)",
+      mi: "Milha (mi)",
+    },
+  });
+
+  conversorsInstances.mass = new Conversors("#conversor-mass", {
+    rates: { kg: 1, g: 1000, mg: 1000000, lb: 2.20462, oz: 35.274, t: 0.001 },
+    labels: {
+      kg: "Quilograma (kg)",
+      g: "Grama (g)",
+      mg: "Miligrama (mg)",
+      lb: "Libra (lb)",
+      oz: "Onça (oz)",
+      t: "Tonelada (t)",
+    },
+  });
+
+  conversorsInstances.area = new Conversors("#conversor-area", {
+    rates: {
+      m2: 1,
+      km2: 1e-6,
+      cm2: 10000,
+      mm2: 1000000,
+      ha: 0.0001,
+      ft2: 10.7639,
+      in2: 1550,
+      acre: 0.000247105,
+    },
+    labels: {
+      m2: "Metro² (m²)",
+      km2: "Quilômetro² (km²)",
+      cm2: "Centímetro² (cm²)",
+      mm2: "Milímetro² (mm²)",
+      ha: "Hectare (ha)",
+      ft2: "Pé² (ft²)",
+      in2: "Polegada² (in²)",
+      acre: "Acre",
+    },
+  });
+
+  conversorsInstances.time = new Conversors("#conversor-time", {
+    rates: {
+      s: 1,
+      min: 1 / 60,
+      h: 1 / 3600,
+      dia: 1 / 86400,
+      semana: 1 / 604800,
+      ms: 1000,
+    },
+    labels: {
+      s: "Segundo (s)",
+      min: "Minuto (min)",
+      h: "Hora (h)",
+      dia: "Dia",
+      semana: "Semana",
+      ms: "Milissegundo (ms)",
+    },
+  });
+
+  conversorsInstances.data = new Conversors("#conversor-data", {
+    rates: {
+      B: 1,
+      KB: 1024,
+      MB: 1024 ** 2,
+      GB: 1024 ** 3,
+      TB: 1024 ** 4,
+      PB: 1024 ** 5,
+    },
+    labels: {
+      B: "Byte (B)",
+      KB: "Kibibyte (KiB)",
+      MB: "Mebibyte (MiB)",
+      GB: "Gibibyte (GiB)",
+      TB: "Tebibyte (TiB)",
+      PB: "Pebibyte (PiB)",
+    },
+  });
+
+  conversorsInstances.volume = new Conversors("#conversor-volume", {
+    rates: {
+      m3: 1,
+      L: 1000,
+      mL: 1000000,
+      cm3: 1000000,
+      ft3: 35.3147,
+      in3: 61023.7,
+      gal_US: 264.172,
+      gal_UK: 219.969,
+    },
+    labels: {
+      m3: "Metro³ (m³)",
+      L: "Litro (L)",
+      mL: "Mililitro (mL)",
+      cm3: "Centímetro³ (cm³)",
+      ft3: "Pé³ (ft³)",
+      in3: "Polegada³ (in³)",
+      gal_US: "Galão (EUA)",
+      gal_UK: "Galão (UK)",
+    },
+  });
+
+  conversorsInstances.velocity = new Conversors("#conversor-velocity", {
+    rates: {
+      "m/s": 1,
+      "km/h": 3.6,
+      mph: 2.23694,
+      "ft/s": 3.28084,
+      kt: 1.94384,
+    },
+    labels: {
+      "m/s": "Metro/segundo (m/s)",
+      "km/h": "Quilômetro/hora (km/h)",
+      mph: "Milha/hora (mph)",
+      "ft/s": "Pé/segundo (ft/s)",
+      kt: "Nó (kt)",
+    },
+  });
+});
 
 toggleThemeBtn.addEventListener("click", () => {
   document.body.classList.toggle("light");
@@ -655,40 +920,60 @@ toggleThemeBtn.addEventListener("click", () => {
 
 numsTableBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    const value = e.target.innerText;
+    const value = e.target.innerText.trim();
 
-    const isOnConversorDetail = [...conversors].some(
-      (section) => !section.classList.contains("hide")
+    const visibleConversor = [...conversors].find(
+      (section) =>
+        !section.classList.contains("hide") && section.id !== "conversor-coin"
     );
 
-    if (isOnConversorDetail && convOperations.activeResult) {
+    if (visibleConversor) {
+      const type = visibleConversor.id.replace("conversor-", "");
+      const instance = conversorsInstances[type];
+      if (instance && typeof instance.updateActiveValue === "function") {
+        instance.updateActiveValue(value);
+        return;
+      }
+    }
+
+    const isOnCoinConversor =
+      document.querySelector("#conversor-coin")?.classList.contains("hide") ===
+      false;
+
+    if (isOnCoinConversor && convCoinsOperations.activeResult) {
       if (+value >= 0 || value === ".") {
-        let currentText = convOperations.activeResult.innerText;
+        let currentText = convCoinsOperations.activeResult.innerText;
         if (value === ".") {
           if (currentText.includes(".")) return;
-          if (currentText === "") currentText = "0";
+          if (currentText === "" || currentText === "1") currentText = "0";
         }
-
-        convOperations.activeResult.innerText += value;
-        setTimeout(() => convOperations.handleConversion(), 0);
+        if (currentText === "1" && !isNaN(value) && value !== ".") {
+          currentText = value;
+        } else {
+          currentText += value;
+        }
+        convCoinsOperations.activeResult.innerText = currentText;
+        setTimeout(() => convCoinsOperations.handleCoinConversor(), 0);
       } else if (value === "DEL") {
-        let currentText = convOperations.activeResult.innerText;
-        convOperations.activeResult.innerText = currentText.slice(0, -1) || "1";
-        setTimeout(() => convOperations.handleConversion(), 0);
+        let currentText = convCoinsOperations.activeResult.innerText;
+        currentText = currentText.slice(0, -1) || "1";
+        convCoinsOperations.activeResult.innerText = currentText;
+        setTimeout(() => convCoinsOperations.handleCoinConversor(), 0);
       } else if (value === "AC") {
-        convOperations.activeResult.innerText = "1";
-        setTimeout(() => convOperations.handleConversion(), 0);
+        convCoinsOperations.activeResult.innerText = "1";
+        setTimeout(() => convCoinsOperations.handleCoinConversor(), 0);
       }
-      // Futuramente adiconar + - / *
+      return;
+    }
+
+    if (+value >= 0 || value === ".") {
+      calc.addDigit(value);
     } else {
-      if (+value >= 0 || value === ".") {
-        calc.addDigit(value);
-      } else {
-        calc.processOperations(value);
-      }
+      calc.processOperations(value);
     }
   });
 });
+
 calc.saveInHistory();
 
 headerContainerBtns.forEach((btn) => {
@@ -700,11 +985,7 @@ headerContainerBtns.forEach((btn) => {
 conversorTablebtns.forEach((button) => {
   button.addEventListener("click", () => {
     const targetId = button.dataset.target;
-
-    conversors.forEach((section) => {
-      section.classList.add("hide");
-    });
-
+    conversors.forEach((section) => section.classList.add("hide"));
     const targetSection = document.querySelector(`#${targetId}`);
     if (targetSection) {
       targetSection.classList.remove("hide");
@@ -717,20 +998,9 @@ conversorTablebtns.forEach((button) => {
 
 returnBTn.forEach((btn) => {
   btn.addEventListener("click", () => {
-    conversors.forEach((section) => {
-      section.classList.add("hide");
-    });
-
+    conversors.forEach((section) => section.classList.add("hide"));
     conversorTable.classList.remove("hide");
   });
 });
 
-convOperations.getCoins().then(() => {
-  convOperations.updateConversorScreen();
-
-  const firstResult = document.querySelector("#conversor-coin .result");
-  if (firstResult) {
-    firstResult.classList.add("click");
-    convOperations.activeResult = firstResult;
-  }
-});
+convCoinsOperations.getCoins();
