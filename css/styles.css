@@ -404,10 +404,64 @@ option {
 }
 
 /* Media query */
-@media (max-width: 450px) {
-  #header-container {
-    width: 90%;
+@media (max-width: 1130px) {
+  #calculate-table {
+    padding: 0 25px;
+    height: 300px;
   }
+
+  #numbers-table {
+    width: 50%;
+  }
+
+  #numbers-table button {
+    height: 65px;
+    margin: 5px;
+  }
+
+  .conversor {
+    width: 100%;
+  }
+
+  .conversor #numbers-table {
+    margin-top: 0px;
+  }
+
+  .header-div {
+    width: 65%;
+  }
+
+  #options-container {
+    width: 800px;
+    margin: 2rem auto 0;
+  }
+
+  .form-control select {
+    margin-right: 50px;
+  }
+
+  #more-options-container {
+    right: 50px;
+  }
+}
+
+@media (max-width: 780px) {
+  #conversor-table button {
+    width: 200px;
+    height: 80px;
+  }
+
+  #numbers-table {
+    width: 80%;
+  }
+
+  #numbers-table button {
+    height: 60px;
+    margin: 5px;
+  }
+}
+
+@media (max-width: 450px) {
   #calculate-table {
     padding: 0 25px;
   }
@@ -415,7 +469,7 @@ option {
   #numbers-table {
     flex-direction: row;
     gap: 15px;
-    width: 100%;
+    width: 90%;
     height: 100%;
     max-height: 50px;
     margin: 0 auto;
@@ -425,5 +479,38 @@ option {
   #numbers-table button {
     width: 45px;
     height: 35px;
+    margin: 5px;
+  }
+
+  #conversor-table button {
+    width: 120px;
+    height: 70px;
+  }
+
+  #conversor-table {
+    display: grid;
+    grid-template-columns: repeat(3, 110px);
+    grid-template-rows: repeat(5, 100px);
+  }
+
+  .conversor {
+    width: 100%;
+  }
+
+  .header-div {
+    width: 65%;
+  }
+
+  #options-container {
+    width: 400px;
+    margin: 1rem auto;
+  }
+
+  .form-control select {
+    margin-right: 50px;
+  }
+
+  #more-options-container {
+    right: -2px;
   }
 }
