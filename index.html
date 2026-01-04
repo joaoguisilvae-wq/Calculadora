@@ -46,7 +46,7 @@
       </header>
     </div>
     <div id="history" class="hide"></div>
-    <div id="calculator" class="hide">
+    <div id="calculator">
       <div id="calculate-table">
         <div id="done-operation"></div>
         <div id="previous-operation"></div>
@@ -799,14 +799,22 @@
       </div>
       <div id="options-container">
         <div class="form-control">
-          <select name="first-temperature" id="first-temperature">
-            <option value="first-temperature">a</option>
+          <select id="unit-from">
+            <option value="c">Grau Celsius (°C)</option>
+            <option value="f">Grau Fahrenheit (°F)</option>
+            <option value="k">Kelvin (K)</option>
+            <option value="r">Grau Rankine (°R)</option>
+            <option value="re">Grau Réaumur (°Ré)</option>
           </select>
           <span class="result">1</span>
         </div>
         <div class="form-control">
-          <select name="second-temperature" id="second-temperature">
-            <option value="second-temperature">a</option>
+          <select id="unit-to">
+            <option value="c">Grau Celsius (°C)</option>
+            <option value="f">Grau Fahrenheit (°F)</option>
+            <option value="k">Kelvin (K)</option>
+            <option value="r">Grau Rankine (°R)</option>
+            <option value="re">Grau Réaumur (°Ré)</option>
           </select>
           <span class="result">1</span>
         </div>
@@ -857,7 +865,7 @@
             <div class="form-control">
               <label for="age">Idade</label>
               <input
-                type="text"
+                type="number"
                 name="age"
                 id="age"
                 placeholder="Inserir idade"
@@ -874,7 +882,7 @@
           <div class="form-control">
             <label for="height">Altura (cm)</label>
             <input
-              type="text"
+              type="number"
               id="height"
               name="height"
               placeholder="Inserir altura"
@@ -883,7 +891,7 @@
           <div class="form-control">
             <label for="weight">Peso (kg)</label>
             <input
-              type="text"
+              type="number"
               id="weight"
               name="weight"
               placeholder="Inserir peso"

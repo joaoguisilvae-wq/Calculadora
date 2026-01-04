@@ -1,3 +1,5 @@
+var conversorsInstances = {};
+
 // Objetos
 class Calculator {
   constructor(previousOperationText, inOperationText, doneOperationText) {
@@ -735,6 +737,163 @@ class ConversorCoin {
   }
 }
 
+class Temperature {
+  constructor(temperatureTable) {
+    this.temperatureTable = temperatureTable;
+    this.activeIndex = 0;
+
+    this.units = ["c", "f", "k", "r", "re"];
+    this.labels = {
+      c: "Celsius",
+      f: "Fahrenheit",
+      k: "Kelvin",
+      r: "Rankine",
+      re: "Réaumur",
+    };
+
+    this.updateConversorTempScreen();
+  }
+
+  updateConversorTempScreen() {
+    const results = document.querySelectorAll("#conversor-temperature .result");
+    const selects = document.querySelectorAll(
+      "#conversor-temperature #options-container select"
+    );
+
+    selects.forEach((select) => {
+      select.innerHTML = "";
+      this.units.forEach((unit) => {
+        const opt = document.createElement("option");
+        opt.value = unit;
+        opt.textContent = this.labels[unit];
+        select.appendChild(opt);
+      });
+      select.value = "c";
+    });
+
+    if (results[0]) {
+      results[0].classList.add("click");
+      results[0].textContent = "1";
+    }
+
+    results.forEach((result, i) => {
+      result.addEventListener("click", () => {
+        results.forEach((r) => r.classList.remove("click"));
+        result.classList.add("click");
+        result.textContent = "1";
+        this.activeIndex = i;
+        this.performConversion();
+      });
+    });
+
+    selects.forEach((select) => {
+      select.addEventListener("change", () => {
+        this.performConversion();
+      });
+    });
+  }
+
+  convertTemperature(value, fromUnit, toUnit) {
+    if (fromUnit === toUnit) return parseFloat(value);
+
+    let celsius;
+    switch (fromUnit) {
+      case "c":
+        celsius = value;
+        break;
+      case "f":
+        celsius = ((value - 32) * 5) / 9;
+        break;
+      case "k":
+        celsius = value - 273.15;
+        break;
+      case "r":
+        celsius = ((value - 491.67) * 5) / 9;
+        break;
+      case "re":
+        celsius = (value * 5) / 4;
+        break;
+      default:
+        return NaN;
+    }
+
+    switch (toUnit) {
+      case "c":
+        return celsius;
+      case "f":
+        return (celsius * 9) / 5 + 32;
+      case "k":
+        return celsius + 273.15;
+      case "r":
+        return ((celsius + 273.15) * 9) / 5;
+      case "re":
+        return (celsius * 4) / 5;
+      default:
+        return NaN;
+    }
+  }
+
+  performConversion() {
+    const selects = document.querySelectorAll(
+      "#conversor-temperature #options-container select"
+    );
+    const results = document.querySelectorAll("#conversor-temperature .result");
+
+    if (selects.length < 2 || results.length < 2) return;
+
+    const activeResult = results[this.activeIndex];
+    const fromValue = parseFloat(activeResult?.textContent) || 1;
+    const fromUnit = selects[this.activeIndex]?.value;
+
+    if (isNaN(fromValue) || !fromUnit) return;
+
+    results.forEach((result, i) => {
+      if (i === this.activeIndex) return;
+
+      const toUnit = selects[i]?.value;
+      if (!toUnit) return;
+
+      const converted = this.convertTemperature(fromValue, fromUnit, toUnit);
+      if (!isNaN(converted)) {
+        result.textContent = converted.toFixed(6).replace(/\.?0+$/, "");
+      }
+    });
+  }
+
+  updateActiveValue(digit) {
+    const results = document.querySelectorAll("#conversor-temperature .result");
+    const activeResult = Array.from(results).find((r) =>
+      r.classList.contains("click")
+    );
+
+    if (!activeResult) return;
+
+    let currentValue = activeResult.textContent.trim();
+
+    if (digit === "DEL") {
+      currentValue = currentValue.slice(0, -1);
+      if (currentValue === "" || currentValue === "0") currentValue = "1";
+    } else if (digit === "AC") {
+      currentValue = "1";
+    } else if (digit === ".") {
+      if (currentValue.includes(".")) return;
+      if (currentValue === "1") currentValue = "1.";
+      else currentValue += ".";
+    } else if (!isNaN(digit)) {
+      if (currentValue === "1") {
+        currentValue = digit;
+      } else {
+        currentValue += digit;
+      }
+    } else {
+      return;
+    }
+
+    activeResult.textContent = currentValue;
+    this.performConversion();
+  }
+}
+
 class IMC {
   constructor(imcTable, imcTableBtns) {
     (this.imcTable = imcTable), (this.imcTableBtns = imcTableBtns);
@@ -762,6 +921,8 @@ const conversors = document.querySelectorAll(".conversor");
 const returnBTn = document.querySelectorAll(".return");
 const results = document.querySelectorAll(".conversor .result");
 
+const temperatureTable = document.querySelector("#conversor-temperature");
+
 const calc = new Calculator(
   previousOperationText,
   inOperationText,
@@ -774,83 +935,178 @@ const convCoinsOperations = new ConversorCoin(
   conversorTablebtns
 );
 
-let conversorsInstances = {};
+const temp = new Temperature(temperatureTable);
 
 document.addEventListener("DOMContentLoaded", () => {
   conversorsInstances.length = new Conversors("#conversor-length", {
     rates: {
-      m: 1,
       km: 0.001,
+      m: 1,
+      dm: 10,
       cm: 100,
       mm: 1000,
+      μm: 1000000,
+      nm: 1000000000,
+      pm: 1000000000000,
+      nmi: 0.000539956803455723,
+      mi: 0.000621371,
+      fur: 0.004970969537898671,
       in: 39.3701,
       ft: 3.28084,
       yd: 1.09361,
-      mi: 0.000621371,
+      fathom: 0.546806649,
+      li: 0.002,
+      zhang: 0.333333333,
+      chi: 3.333333333,
+      cun: 33.33333333,
+      hao: 33333.33333,
+      parsec: 3.240779289e-17,
+      lunar_distance: 2.6014e-9,
+      au: 6.684587122e-12,
+      light_year: 1.057000834e-16,
     },
     labels: {
-      m: "Metro (m)",
       km: "Quilômetro (km)",
+      m: "Metro (m)",
+      dm: "Decímetro (dm)",
       cm: "Centímetro (cm)",
       mm: "Milímetro (mm)",
-      in: "Polegada (in)",
-      ft: "Pé (ft)",
+      μm: "Micrômetro (μm)",
+      nm: "Nanômetro (nm)",
+      pm: "Picômetro (pm)",
+      nmi: "Milha náutica (nmi)",
+      fur: "Furlong (fur)",
+      fathom: "Fathom (ftm)",
       yd: "Jarda (yd)",
+      ft: "Pé (ft)",
+      in: "Polegada (in)",
       mi: "Milha (mi)",
+      li: "Lí chinês (li)",
+      zhang: "Zhang (zhang)",
+      chi: "Chi chinês (chi)",
+      cun: "Cun chinês (cun)",
+      hao: "Hao chinês (hao)",
+      parsec: "Parsec (pc)",
+      lunar_distance: "Distância Lunar",
+      au: "Unidade Astronômica (UA)",
+      light_year: "Ano-luz (ly)",
     },
   });
 
   conversorsInstances.mass = new Conversors("#conversor-mass", {
-    rates: { kg: 1, g: 1000, mg: 1000000, lb: 2.20462, oz: 35.274, t: 0.001 },
+    rates: {
+      t: 0.001,
+      kg: 1,
+      g: 1000,
+      mg: 1000000,
+      µg: 1000000000,
+      quintal: 0.01,
+      lb: 2.2046226218,
+      oz: 35.27396195,
+      ct: 5000,
+      gr: 15432.358352941431,
+      "l.t": 0.0009842065276110607,
+      "sh.t": 0.001102311310924388,
+      cwt: 0.01968413055222122,
+      cwtt: 0.022046226218487756,
+      st: 0.15747304441776972,
+      dr: 564.3833911932872,
+      dan: 0.02,
+      jin: 2,
+      qian: 200,
+      liang: 20,
+      "jin-taiwan": 1.6666666666666667,
+    },
     labels: {
+      t: "Tonelada (t)",
       kg: "Quilograma (kg)",
       g: "Grama (g)",
       mg: "Miligrama (mg)",
+      µg: "Micrograma (µg)",
+      quintal: "Quintal (q)",
       lb: "Libra (lb)",
       oz: "Onça (oz)",
-      t: "Tonelada (t)",
+      ct: "Quilate (ct)",
+      gr: "Grão (gr)",
+      "l.t": "Tonelada Britânica (UK)",
+      "sh.t": "Tonelada Norte Americana (US)",
+      cwt: "Quintal britânico (cwt)",
+      cwtt: "Quintal norte-americano (cwt)",
+      st: "Pedra (st)",
+      dr: "Dram (dr)",
+      dan: "Dan (dan)",
+      jin: "Jin (jin)",
+      qian: "Qian (qian)",
+      liang: "Liang (liang)",
+      "jin-taiwan": "Jin (Taiwan) (Jin Taiwan)",
     },
   });
 
   conversorsInstances.area = new Conversors("#conversor-area", {
     rates: {
-      m2: 1,
       km2: 1e-6,
+      ha: 0.0001,
+      a: 0.01,
+      m2: 1,
+      dm2: 100,
       cm2: 10000,
       mm2: 1000000,
-      ha: 0.0001,
-      ft2: 10.7639,
-      in2: 1550,
-      acre: 0.000247105,
+      µm2: 1e12,
+      ac: 0.00024710538146716536,
+      milha2: 3.861021585e-7,
+      jd2: 0.0005,
+      ft2: 10.763910416709722,
+      pol2: 1550.0031000062001,
+      rd2: 0.03953686103474647,
+      qing: 0.000015,
+      mu: 0.0015,
+      chi2: 9,
+      cun2: 900,
     },
     labels: {
-      m2: "Metro² (m²)",
-      km2: "Quilômetro² (km²)",
-      cm2: "Centímetro² (cm²)",
-      mm2: "Milímetro² (mm²)",
+      km2: "Quilômetro quadrado (km²)",
       ha: "Hectare (ha)",
-      ft2: "Pé² (ft²)",
-      in2: "Polegada² (in²)",
-      acre: "Acre",
+      a: "Are (a)",
+      m2: "Metro quadrado (m²)",
+      dm2: "Decímetro quadrado (dm²)",
+      cm2: "Centímetro quadrado (cm²)",
+      mm2: "Milímetro quadrado (mm²)",
+      µm2: "Micrômetro quadrado (µm²)",
+      ac: "Acre (ac)",
+      milha2: "Milha quadrada (sq mi)",
+      jd2: "Jarda quadrada (jd²)",
+      ft2: "Pé quadrado (ft²)",
+      pol2: "Polegada quadrada (in²)",
+      rd2: "Vara quadrada (rd2)",
+      qing: "Qing (qing)",
+      mu: "Mu (mu)",
+      chi2: "Chi quadrado (chi²)",
+      cun2: "Cun quadrado (cun²)",
     },
   });
 
   conversorsInstances.time = new Conversors("#conversor-time", {
     rates: {
-      s: 1,
-      min: 1 / 60,
-      h: 1 / 3600,
-      dia: 1 / 86400,
+      a: 1 / 31557600,
       semana: 1 / 604800,
+      d: 1 / 86400,
+      h: 1 / 3600,
+      min: 1 / 60,
+      s: 1,
       ms: 1000,
+      μs: 1000000,
+      ps: 1000000000,
     },
     labels: {
-      s: "Segundo (s)",
-      min: "Minuto (min)",
-      h: "Hora (h)",
-      dia: "Dia",
+      a: "Ano (a)",
       semana: "Semana",
+      d: "Dia (d)",
+      h: "Hora (h)",
+      min: "Minuto (min)",
+      s: "Segundo (s)",
       ms: "Milissegundo (ms)",
+      μs: "Microssegundo (μs)",
+      ps: "Picossegundo (ps)",
     },
   });
 
@@ -876,42 +1132,56 @@ document.addEventListener("DOMContentLoaded", () => {
   conversorsInstances.volume = new Conversors("#conversor-volume", {
     rates: {
       m3: 1,
+      dm3: 1000,
+      mm3: 1000000000,
+      hl: 10,
       L: 1000,
       mL: 1000000,
-      cm3: 1000000,
       ft3: 35.3147,
       in3: 61023.7,
-      gal_US: 264.172,
-      gal_UK: 219.969,
+      yd3: 1.30795,
+      af3: 8.10714e-7,
     },
     labels: {
-      m3: "Metro³ (m³)",
+      m3: "Metro cúbico (m³)",
+      dm3: "Decímetro cúbico (dm³)",
+      mm3: "Milímetro cúbico (mm³)",
+      hl: "Hectolitro (hl)",
       L: "Litro (L)",
       mL: "Mililitro (mL)",
-      cm3: "Centímetro³ (cm³)",
-      ft3: "Pé³ (ft³)",
-      in3: "Polegada³ (in³)",
-      gal_US: "Galão (EUA)",
-      gal_UK: "Galão (UK)",
+      ft3: "Pé cúbico (ft³)",
+      in3: "Polegada cúbica (in³)",
+      yd3: "Jarda cúbica (yd³)",
+      af3: "Acre-pé (af³)",
     },
   });
 
   conversorsInstances.velocity = new Conversors("#conversor-velocity", {
     rates: {
       "m/s": 1,
+      c: 3.3356409519815205e-9,
+      ma: 0.002938589719085654,
       "km/h": 3.6,
+      "km/s": 0.001,
+      kn: 1.94384,
       mph: 2.23694,
+      ips: 39.3701,
       "ft/s": 3.28084,
-      kt: 1.94384,
     },
     labels: {
-      "m/s": "Metro/segundo (m/s)",
-      "km/h": "Quilômetro/hora (km/h)",
-      mph: "Milha/hora (mph)",
-      "ft/s": "Pé/segundo (ft/s)",
-      kt: "Nó (kt)",
+      "m/s": "Metro por segundo (m/s)",
+      c: "Velocidade da luz (c)",
+      ma: "Mach (Ma)",
+      "km/h": "Quilômetro por hora (km/h)",
+      "km/s": "Quilômetro por segundo (km/s)",
+      kn: "Nó (kn)",
+      mph: "Milha por hora (mph)",
+      ips: "Polegada por segundo (ips)",
+      "ft/s": "Pé por segundo (ft/s)",
     },
   });
+
+  conversorsInstances.temperature = new Temperature("#conversor-temperature");
 });
 
 toggleThemeBtn.addEventListener("click", () => {
