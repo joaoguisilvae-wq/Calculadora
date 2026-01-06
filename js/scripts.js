@@ -240,10 +240,11 @@ class Header {
     this.headerContainerBtns.forEach((b) => b.classList.remove("focus"));
     btn.classList.add("focus");
 
-    const buttonText = btn.innerText.trim();
+    const screen = btn.dataset.screen;
+    const swipeScreen = document.querySelector("#swipe-screen");
 
-    switch (buttonText) {
-      case "Calculadora":
+    switch (screen) {
+      case "calculator":
         calculator.classList.remove("hide", "less-opacity");
         history.classList.add("hide");
         conversorTable.classList.add("hide");
@@ -251,7 +252,7 @@ class Header {
         moreOptionsContainer.classList.add("hide");
         break;
 
-      case "Conversor":
+      case "conversor":
         conversorTable.classList.remove("hide", "less-opacity");
         calculator.classList.add("hide");
         history.classList.add("hide");
@@ -259,7 +260,7 @@ class Header {
         moreOptionsContainer.classList.add("hide");
         break;
 
-      case "Histórico":
+      case "history":
         history.classList.remove("hide", "less-opacity");
         calculator.classList.add("hide");
         conversorTable.classList.add("hide");
@@ -267,6 +268,9 @@ class Header {
         moreOptionsContainer.classList.add("hide");
         break;
 
+      case "swipe-screen":
+        alert("Isso colocaria sua tela ficar no modo janela tlgd?");
+        break;
       default:
         moreOptionsContainer.classList.toggle("hide");
         history.classList.toggle("less-opacity");
@@ -895,8 +899,116 @@ class Temperature {
 }
 
 class IMC {
-  constructor(imcTable, imcTableBtns) {
-    (this.imcTable = imcTable), (this.imcTableBtns = imcTableBtns);
+  constructor(imcTable, imcResultTable, imcTableAuxiliar) {
+    this.imcTable = imcTable;
+    this.imcResultTable = imcResultTable;
+    this.imcTableAuxiliar = imcTableAuxiliar;
+
+    this.heightInput = this.imcTable.querySelector("#height");
+    this.weightInput = this.imcTable.querySelector("#weight");
+
+    this.imcResultValue = this.imcResultTable.querySelector("#imc-result span");
+    this.heightResult = this.imcResultTable.querySelector("#height-result");
+
+    this.minWeightSuggestionResult =
+      this.imcResultTable.querySelector("#min-weight");
+
+    this.maxWeightSuggestionResult =
+      this.imcResultTable.querySelector("#max-weight");
+
+    this.label = this.imcResultTable.querySelector("#label");
+    this.bar = this.imcResultTable.querySelector("#bar");
+
+    this.height = null;
+    this.weight = null;
+
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    this.heightInput.addEventListener("input", (e) => {
+      this.height = parseFloat(e.target.value) || null;
+    });
+
+    this.weightInput.addEventListener("input", (e) => {
+      this.weight = parseFloat(e.target.value) || null;
+    });
+
+    const calculateBtn = this.imcTable.querySelector("#calculate");
+    calculateBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.calculateAndShow();
+    });
+
+    const returnButtons = this.imcResultTable.querySelectorAll(".return");
+    returnButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        this.imcTableAuxiliar.classList.remove("hide");
+        this.imcResultTable.classList.add("hide");
+      });
+    });
+  }
+
+  calculateAndShow() {
+    if (
+      this.height === null ||
+      this.weight === null ||
+      this.height <= 0 ||
+      this.weight <= 0 ||
+      this.height > 300 ||
+      this.weight > 500
+    ) {
+      alert("Por favor, insira valores válidos para altura e peso.");
+      return;
+    }
+
+    const heightInMeters = this.height / 100;
+    const imc = this.weight / (heightInMeters * heightInMeters);
+
+    if (imc > 50) {
+      alert("Ou se ta morrendo ou mentiu");
+      return;
+    }
+
+    this.imcResultValue.textContent = imc.toFixed(1);
+
+    this.heightResult.textContent = this.height;
+
+    const minIdealWeight = (18.5 * heightInMeters * heightInMeters).toFixed(1);
+    this.minWeightSuggestionResult.textContent = minIdealWeight;
+
+    const maxIdealWeight = (24.9 * heightInMeters * heightInMeters).toFixed(1);
+    this.maxWeightSuggestionResult.textContent = maxIdealWeight;
+
+    this.updateLabelOnBar(imc);
+
+    this.imcTableAuxiliar.classList.add("hide");
+    this.imcResultTable.classList.remove("hide");
+  }
+
+  updateLabelOnBar(imc) {
+    const minIMC = 18.5;
+    const maxIMC = 28.0;
+
+    let clampedIMC = Math.min(Math.max(imc, minIMC), maxIMC);
+
+    // Posição percentual na barra
+    const percent = ((clampedIMC - minIMC) / (maxIMC - minIMC)) * 100;
+
+    // Atualiza posição do balão
+    this.label.style.left = `${percent}%`;
+
+    // Atualiza texto conforme faixa
+    let category = "Normal";
+    if (imc >= 24.0 && imc < 28.0) {
+      category = "Sobrepeso";
+    } else if (imc >= 28.0) {
+      category = "Obesidade";
+    } else if (imc < 18.5) {
+      category = "Magreza";
+    }
+
+    this.label.textContent = category;
   }
 }
 
@@ -923,6 +1035,10 @@ const results = document.querySelectorAll(".conversor .result");
 
 const temperatureTable = document.querySelector("#conversor-temperature");
 
+const imcTable = document.querySelector("#imc-calculator");
+const imcResultTable = document.querySelector("#imc-result-table");
+const imcTableAuxiliar = document.querySelector("#auxiliar");
+
 const calc = new Calculator(
   previousOperationText,
   inOperationText,
@@ -936,6 +1052,8 @@ const convCoinsOperations = new ConversorCoin(
 );
 
 const temp = new Temperature(temperatureTable);
+
+const imc = new IMC(imcTable, imcResultTable, imcTableAuxiliar);
 
 document.addEventListener("DOMContentLoaded", () => {
   conversorsInstances.length = new Conversors("#conversor-length", {

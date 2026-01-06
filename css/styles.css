@@ -82,6 +82,10 @@ option {
   transition: 0.5s;
 }
 
+#header-container button:hover {
+  opacity: 0.8;
+}
+
 /* Calculate-table */
 #calculate-table {
   display: flex;
@@ -401,6 +405,111 @@ option {
   cursor: pointer;
   font-size: 1.1rem;
   color: var(--theme-color);
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+#imc-calculator button[type="submit"]:hover {
+  opacity: 1;
+}
+
+#imc-calculator button[type="submit"]:focus {
+  scale: 1.03;
+}
+
+#imc-result-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.bar-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 80px auto 40px;
+}
+
+.color-bar {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(to right, #7fc9fb, #7fc97f, #ffff7f, #ff7f00);
+}
+
+.label {
+  position: absolute;
+  top: -50px;
+  background: #ffb347;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  text-align: center;
+  transform: translateX(-50%);
+  transition: left 0.3s ease-out;
+  pointer-events: none;
+  font-size: 1.5rem;
+}
+
+.label::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffb347 transparent transparent transparent;
+}
+
+.markers {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  font-size: 15px;
+  color: #aaa;
+  margin: 15px auto 0;
+}
+
+.input-area {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#imc-result-table input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 80px;
+  text-align: center;
+  font-size: 14px;
+}
+
+#analysis p,
+#analysis span {
+  font-size: 1rem;
+  color: #444;
+}
+
+#analysis .form-control {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#analysis .form-control span {
+  margin-left: 50px;
+}
+
+#analysis #recommended-weight {
+  display: flex;
+  justify-content: space-around;
+  font-size: 3rem;
 }
 
 /* Media query */

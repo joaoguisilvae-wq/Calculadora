@@ -29,18 +29,24 @@
   <body>
     <div id="header-container">
       <header>
-        <button id="swipe-screen">
+        <button data-screen="swipe-screen" id="swipe-screen">
           <i
             class="fi fi-ts-arrow-up-right-and-arrow-down-left-from-center"
           ></i>
         </button>
-        <button id="calc-option" class="focus">Calculadora</button>
-        <button id="conv-options">Conversor</button
-        ><button id="more-options" data-action="more-options">
+        <button data-screen="calculator" id="calc-option" class="focus">
+          Calculadora
+        </button>
+        <button data-screen="conversor" id="conv-options">Conversor</button
+        ><button
+          data-screen="more-options"
+          id="more-options"
+          data-action="more-options"
+        >
           <i class="fi fi-tr-square-ellipsis-vertical"></i>
         </button>
         <div id="more-options-container" class="hide">
-          <button id="history-btn">Histórico</button>
+          <button data-screen="history" id="history-btn">Histórico</button>
           <button id="toggle-theme-btn">Mudar tema</button>
         </div>
       </header>
@@ -564,8 +570,12 @@
         <h2>Data</h2>
       </div>
       <div id="date-input">
-        <h2><span>De </span></h2>
-        <h2><span>Até </span></h2>
+        <h2>
+          <label>De <input type="date" id="from" /></label>
+        </h2>
+        <h2>
+          <label>Até <input type="date" id="to" /></label>
+        </h2>
       </div>
       <h2>Diferença</h2>
       <div id="difference-container">
@@ -855,58 +865,96 @@
       </div>
     </div>
     <div id="imc-calculator" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>IMC</h2>
-      </div>
-      <div id="form">
-        <form>
-          <div id="form-control">
+      <div id="auxiliar">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>IMC</h2>
+        </div>
+        <div id="form">
+          <form>
+            <div id="form-control">
+              <div class="form-control">
+                <label for="age">Idade</label>
+                <input
+                  type="number"
+                  name="age"
+                  id="age"
+                  placeholder="Inserir idade"
+                />
+              </div>
+              <div class="form-control">
+                <label
+                  >Genero:
+                  <input type="checkbox" name="gender" id="masculine" />
+                  <input type="checkbox" name="gender" id="feminine" />
+                </label>
+              </div>
+            </div>
             <div class="form-control">
-              <label for="age">Idade</label>
+              <label for="height">Altura (cm)</label>
               <input
                 type="number"
-                name="age"
-                id="age"
-                placeholder="Inserir idade"
+                id="height"
+                name="height"
+                placeholder="Inserir altura"
               />
             </div>
             <div class="form-control">
-              <label
-                >Genero:
-                <input type="checkbox" name="gender" id="masculine" />
-                <input type="checkbox" name="gender" id="feminine" />
-              </label>
+              <label for="weight">Peso (kg)</label>
+              <input
+                type="number"
+                id="weight"
+                name="weight"
+                placeholder="Inserir peso"
+              />
+            </div>
+          </form>
+          <div id="about">
+            <h4>Sobre o IMC</h4>
+            <p>
+              O IMC (Índice de Massa Corporal) é uma medida usada para verificar
+              se o seu peso está adequado à sua altura, calculado dividindo o
+              peso (em kg) pela altura (em metros) ao quadrado.
+            </p>
+          </div>
+          <button id="calculate" type="submit">Calcular</button>
+        </div>
+      </div>
+      <div id="imc-result-table" class="hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Seu IMC atual</h2>
+        </div>
+        <div id="imc-result">
+          <span></span>
+          <p>Indice de Massa Corporal</p>
+        </div>
+        <div class="bar-container">
+          <div class="color-bar" id="bar"></div>
+          <div class="label" id="label">Sobrepeso</div>
+          <div class="markers">
+            <span>18.5</span>
+            <span>24.0</span>
+            <span>28.0</span>
+          </div>
+        </div>
+        <div id="analysis">
+          <p>Análise</p>
+          <div class="form-control">
+            <h4>Altura (cm)</h4>
+            <span id="height-result"></span>
+          </div>
+          <div class="form-control">
+            <h4>Peso sugerido (kg)</h4>
+            <div id="recommended-weight">
+              <p>
+                <span id="min-weight"></span>
+                a
+                <span id="max-weight"></span>
+              </p>
             </div>
           </div>
-          <div class="form-control">
-            <label for="height">Altura (cm)</label>
-            <input
-              type="number"
-              id="height"
-              name="height"
-              placeholder="Inserir altura"
-            />
-          </div>
-          <div class="form-control">
-            <label for="weight">Peso (kg)</label>
-            <input
-              type="number"
-              id="weight"
-              name="weight"
-              placeholder="Inserir peso"
-            />
-          </div>
-        </form>
-        <div id="about">
-          <h4>Sobre o IMC</h4>
-          <p>
-            O IMC (Índice de Massa Corporal) é uma medida usada para verificar
-            se o seu peso está adequado à sua altura, calculado dividindo o peso
-            (em kg) pela altura (em metros) ao quadrado.
-          </p>
         </div>
-        <button type="submit">Calcular</button>
       </div>
     </div>
   </body>
