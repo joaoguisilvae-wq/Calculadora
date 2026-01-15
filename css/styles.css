@@ -328,6 +328,28 @@ option {
   margin-top: 10px;
 }
 
+#conversor-date button[type="submit"] {
+  width: 60%;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  margin: 40px;
+  background-color: var(--equal-background);
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--equal-text);
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+#conversor-date button[type="submit"]:hover {
+  opacity: 1;
+}
+
+#conversor-date button[type="submit"]:focus {
+  scale: 1.1;
+}
+
 /* Discount calculator */
 #discount-calculator .form-control {
   display: flex;

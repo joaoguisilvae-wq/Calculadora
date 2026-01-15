@@ -120,11 +120,6 @@
         </button>
       </div>
       <div class="conversor-theme">
-        <button data-target="finance-calculator">
-          <i class="fi fi-tr-money-check-edit"></i> Finanças
-        </button>
-      </div>
-      <div class="conversor-theme">
         <button data-target="conversor-data">
           <i class="fi fi-tr-envelope-open-text"></i> Dados
         </button>
@@ -441,75 +436,6 @@
         </div>
       </div>
     </div>
-    <div id="finance-calculator" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Finanças</h2>
-      </div>
-      <div id="loan-container">
-        <h3>Principal</h3>
-        <input type="number" name="value" placeholder="Inserir valor" />
-        <div id="btns-div">
-          <button id="emprestimo">Empréstimo</button>
-          <button id="investimento">Investimento</button>
-        </div>
-        <div class="form-control">
-          <h3 for="interest-rate">Taxa de juros (%)</h3>
-          <input
-            type="number"
-            placeholder="4.85"
-            value="4.85"
-            id="interest-rate"
-            name="interest-rate"
-          />
-        </div>
-        <div class="form-control">
-          <h3>Duração</h3>
-          <button id="durantion" value="1 ano e 0 meses">
-            1 ano e 0 meses
-          </button>
-        </div>
-      </div>
-      <div id="investment-container">
-        <h3>Investimento Total</h3>
-        <input type="number" name="value" placeholder="Inserir valor" />
-        <div id="btns-div">
-          <button id="emprestimo">Empréstimo</button>
-          <button id="investimento">Investimento</button>
-        </div>
-        <div class="form-control">
-          <h3>Taxa de juros (%)</h3>
-          <input
-            type="number"
-            placeholder="4.85"
-            value="4.85"
-            id="rate-interest"
-            name="rate-interest"
-          />
-        </div>
-        <div class="form-control">
-          <h3>Duração</h3>
-          <button id="durantion" name="durantion" value="1 ano e 0 meses">
-            1 ano e 0 meses
-          </button>
-        </div>
-        <div class="form-control">
-          <h3>Tipo de investimento</h3>
-          <select name="investment-type" id="investment-type">
-            <option value="investment-type">Único</option>
-            <option value="investment-type">Recorrente</option>
-          </select>
-        </div>
-        <div id="duration-container">
-          <h2>Duração</h2>
-          <div id="year"><p>Ano</p></div>
-          <div id="mounth"><p>Mes</p></div>
-          <button id="cancel">Cancelar</button>
-          <button id="submit-duration">Ok</button>
-        </div>
-        <button type="submit">Calcular</button>
-      </div>
-    </div>
     <div id="conversor-data" class="conversor hide">
       <div class="header-div">
         <button class="return"><i class="fi fi-rr-angle-left"></i></button>
@@ -576,6 +502,8 @@
         <h2>
           <label>Até <input type="date" id="to" /></label>
         </h2>
+
+        <button id="calculate" type="submit">Calcular</button>
       </div>
       <h2>Diferença</h2>
       <div id="difference-container">
@@ -706,14 +634,24 @@
         <h2>Sistema numérico</h2>
       </div>
       <div id="options-container">
-        <select name="first-number" id="first-number">
-          <option value="first-number">a</option>
-        </select>
-        <span class="result">1</span>
-        <select name="second-number" id="second-number">
-          <option value="second-number">b</option>
-        </select>
-        <span class="result">1</span>
+        <div class="form-control">
+          <select name="first-number" id="first-number">
+            <option value="bin">Binário</option>
+            <option value="oct">Octal</option>
+            <option value="dec" selected>Decimal</option>
+            <option value="hex">Hexadecimal</option>
+          </select>
+          <span class="result click">1</span>
+        </div>
+        <div class="form-control">
+          <select name="second-number" id="second-number">
+            <option value="bin">Binário</option>
+            <option value="oct">Octal</option>
+            <option value="dec" selected>Decimal</option>
+            <option value="hex">Hexadecimal</option>
+          </select>
+          <span class="result">1</span>
+        </div>
       </div>
       <div id="numbers-table">
         <div class="block">

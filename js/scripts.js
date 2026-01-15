@@ -749,6 +749,68 @@ class ConversorCoin {
   }
 }
 
+class Finances {}
+
+class DateCalculator {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.fromInput = document.querySelector("#from");
+    this.toInput = document.querySelector("#to");
+    this.calcBtn = document.querySelector("#calculate");
+
+    this.yearsSpan = document.querySelector(".date:nth-child(1) span");
+    this.monthsSpan = document.querySelector(".date:nth-child(2) span");
+    this.daysSpan = document.querySelector(".date:nth-child(3) span");
+
+    if (this.calcBtn) {
+      this.calcBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.calculateDifference();
+      });
+    }
+  }
+
+  calculateDifference() {
+    const fromValue = this.fromInput.value;
+    const toValue = this.toInput.value;
+
+    if (!fromValue || !toValue) {
+      alert("Selecione ambas as datas.");
+      return;
+    }
+
+    const fromDate = new Date(fromValue);
+    const toDate = new Date(toValue);
+
+    if (fromDate > toDate) {
+      alert("A data 'De' não pode ser maior que a data 'Até'.");
+      return;
+    }
+
+    let years = toDate.getFullYear() - fromDate.getFullYear();
+    let months = toDate.getMonth() - fromDate.getMonth();
+    let days = toDate.getDate() - fromDate.getDate();
+
+    if (days < 0) {
+      months--;
+      const prevMonth = new Date(toDate.getFullYear(), toDate.getMonth(), 0);
+      days += prevMonth.getDate();
+    }
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    this.yearsSpan.textContent = years;
+    this.monthsSpan.textContent = months;
+    this.daysSpan.textContent = days;
+  }
+}
+
 class Discount {
   constructor() {
     this.container = document.querySelector("#conversor-discount");
@@ -828,6 +890,132 @@ class Discount {
       .toFixed(8)
       .replace(/\.?0+$/, "")
       .replace(/\.$/, "");
+  }
+}
+
+class NumberSistem {
+  constructor() {
+    this.results = document.querySelectorAll(".result");
+    this.selects = document.querySelectorAll("select");
+
+    this.activeIndex = 0;
+    this.results[0]?.classList.add("click");
+
+    this.bindEvents();
+    this.handleConversion();
+  }
+
+  bindEvents() {
+    this.results.forEach((result, i) => {
+      result.addEventListener("click", () => {
+        this.results.forEach((r) => r.classList.remove("click"));
+        result.classList.add("click");
+        this.activeIndex = i;
+      });
+    });
+
+    this.selects.forEach((select) => {
+      select.addEventListener("change", () => this.handleConversion());
+    });
+  }
+
+  toDecimal(value, fromBase) {
+    try {
+      if (fromBase === "dec") return parseInt(value, 10);
+      if (fromBase === "bin") return parseInt(value, 2);
+      if (fromBase === "oct") return parseInt(value, 8);
+      if (fromBase === "hex") return parseInt(value, 16);
+    } catch (e) {}
+    return NaN;
+  }
+
+  fromDecimal(value, toBase) {
+    if (isNaN(value)) return "0";
+    if (toBase === "dec") return value.toString();
+    if (toBase === "bin") return value.toString(2);
+    if (toBase === "oct") return value.toString(8);
+    if (toBase === "hex") return value.toString(16).toUpperCase();
+    return "0";
+  }
+
+  isValidForBase(value, base) {
+    if (value === "") return false;
+    const regexMap = {
+      bin: /^[01]+$/,
+      oct: /^[0-7]+$/,
+      dec: /^\d+$/,
+      hex: /^[0-9A-Fa-f]+$/,
+    };
+    return regexMap[base]?.test(value) ?? false;
+  }
+
+  handleConversion() {
+    const activeResult = this.results[this.activeIndex];
+    const fromBase = this.selects[this.activeIndex]?.value;
+    let inputValue = activeResult?.textContent.trim() || "0";
+
+    if (inputValue.length > 1) {
+      inputValue = inputValue.replace(/^0+(?=\d)/, "");
+    }
+    if (inputValue === "") inputValue = "0";
+
+    if (!this.isValidForBase(inputValue, fromBase)) {
+      this.results.forEach((r, i) => {
+        if (i !== this.activeIndex) r.textContent = "0";
+      });
+      return;
+    }
+
+    // Converte para decimal
+    const decimalValue = this.toDecimal(inputValue, fromBase);
+    if (isNaN(decimalValue)) {
+      this.results.forEach((r, i) => {
+        if (i !== this.activeIndex) r.textContent = "0";
+      });
+      return;
+    }
+
+    this.results.forEach((result, i) => {
+      if (i === this.activeIndex) return;
+      const toBase = this.selects[i]?.value;
+      result.textContent = this.fromDecimal(decimalValue, toBase);
+    });
+  }
+
+  updateActiveValue(digit) {
+    const activeResult = this.results[this.activeIndex];
+    if (!activeResult) return;
+
+    let currentValue = activeResult.textContent.trim();
+    const currentBase = this.selects[this.activeIndex]?.value;
+
+    const validDigits = {
+      bin: "01",
+      oct: "01234567",
+      dec: "0123456789",
+      hex: "0123456789ABCDEF",
+    };
+
+    const allowed = validDigits[currentBase] || "0123456789";
+
+    if (digit === "DEL") {
+      currentValue = currentValue.slice(0, -1) || "0";
+    } else if (digit === "AC") {
+      currentValue = "0";
+    } else if (digit === ".") {
+      return;
+    } else if (allowed.includes(digit.toUpperCase())) {
+      if (currentValue === "0") {
+        currentValue = digit;
+      } else {
+        currentValue += digit;
+      }
+    } else {
+      return;
+    }
+
+    activeResult.textContent = currentValue;
+    this.handleConversion();
   }
 }
 
@@ -1144,7 +1332,13 @@ const convCoinsOperations = new ConversorCoin(
   conversorTablebtns
 );
 
+const finance = new Finances();
+
+const dateCalculator = new DateCalculator();
+
 const discount = new Discount();
+
+const numberSistem = new NumberSistem();
 
 const temp = new Temperature(temperatureTable);
 
@@ -1397,6 +1591,10 @@ document.addEventListener("DOMContentLoaded", () => {
   conversorsInstances.temperature = new Temperature("#conversor-temperature");
 
   conversorsInstances.discount = new Discount("#conversor-discount");
+
+  conversorsInstances.date = new DateCalculator("#conversor-date");
+
+  conversorsInstances["number-sistem"] = new NumberSistem("#number-sistem");
 });
 
 toggleThemeBtn.addEventListener("click", () => {
@@ -1413,7 +1611,7 @@ numsTableBtns.forEach((btn) => {
     );
 
     if (visibleConversor) {
-      const type = visibleConversor.id.replace("conversor-", "");
+      const type = visibleConversor.id;
       const instance = conversorsInstances[type];
       if (instance && typeof instance.updateActiveValue === "function") {
         instance.updateActiveValue(value);
