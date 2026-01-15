@@ -135,7 +135,7 @@
         </button>
       </div>
       <div class="conversor-theme">
-        <button data-target="discount-calculator">
+        <button data-target="conversor-discount">
           <i class="fi fi-ts-badge-percent"></i> Desconto
         </button>
       </div>
@@ -593,7 +593,7 @@
         </div>
       </div>
     </div>
-    <div id="discount-calculator" class="conversor hide">
+    <div id="conversor-discount" class="conversor hide">
       <div class="header-div">
         <button class="return"><i class="fi fi-rr-angle-left"></i></button>
         <h2>Desconto</h2>
@@ -602,23 +602,23 @@
         <div class="form-control">
           <h3>Preço original</h3>
           <div id="original-price">
-            <span>100</span>
+            <span class="result">100</span>
           </div>
         </div>
         <div class="form-control">
           <h3>Disconto (%)</h3>
           <div id="discount">
-            <span>10</span>
+            <span class="result">10</span>
           </div>
         </div>
         <div class="form-control">
           <h3>Preço final</h3>
           <div id="final-price">
-            <span>90</span>
+            <span class="result">90</span>
           </div>
         </div>
       </div>
-      <p>Economia de 10</p>
+      <p>Economia de <span>10</span></p>
       <div id="numbers-table">
         <div class="block">
           <button class="number operation" id="seven">7</button>
@@ -931,7 +931,7 @@
         </div>
         <div class="bar-container">
           <div class="color-bar" id="bar"></div>
-          <div class="label" id="label">Sobrepeso</div>
+          <div class="label" id="label"></div>
           <div class="markers">
             <span>18.5</span>
             <span>24.0</span>

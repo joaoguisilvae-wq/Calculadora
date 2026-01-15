@@ -269,7 +269,7 @@ class Header {
         break;
 
       case "swipe-screen":
-        alert("Isso colocaria sua tela ficar no modo janela tlgd?");
+        alert("Isso colocaria sua tela ficar no modo janela");
         break;
       default:
         moreOptionsContainer.classList.toggle("hide");
@@ -374,8 +374,16 @@ class Conversors {
       const converted = this.convert(fromValue, fromUnit, toUnit);
       result.textContent = isNaN(converted)
         ? "0"
-        : converted.toFixed(6).replace(/\.?0+$/, "");
+        : this.formatNumber(converted);
     });
+  }
+
+  formatNumber(num) {
+    if (isNaN(num)) return "1";
+    return num
+      .toFixed(8)
+      .replace(/\.?0+$/, "")
+      .replace(/\.$/, "");
   }
 
   updateActiveValue(digit) {
@@ -741,6 +749,88 @@ class ConversorCoin {
   }
 }
 
+class Discount {
+  constructor() {
+    this.container = document.querySelector("#conversor-discount");
+    if (!this.container) return;
+
+    const originalEl = this.container.querySelector("#original-price .result");
+    const discountEl = this.container.querySelector("#discount .result");
+    const finalEl = this.container.querySelector("#final-price .result");
+
+    [originalEl, discountEl, finalEl].forEach((el) => {
+      el.addEventListener("click", () => {
+        [originalEl, discountEl, finalEl].forEach((e) =>
+          e.classList.remove("click")
+        );
+
+        el.classList.add("click");
+      });
+    });
+  }
+
+  updateActiveValue(digit) {
+    const activeEl = this.container.querySelector(".result.click");
+    if (!activeEl) return;
+
+    let currentValue = activeEl.textContent.trim();
+
+    if (digit === "DEL") {
+      currentValue = currentValue.slice(0, -1) || "1";
+    } else if (digit === "AC") {
+      currentValue = "1";
+    } else if (digit === ".") {
+      if (!currentValue.includes(".")) {
+        currentValue += ".";
+      }
+    } else if (!isNaN(digit)) {
+      if (currentValue === "1") {
+        currentValue = digit;
+      } else {
+        currentValue += digit;
+      }
+    } else {
+      return;
+    }
+
+    activeEl.textContent = currentValue;
+    this.performCalc();
+  }
+
+  performCalc() {
+    const originalEl = this.container.querySelector("#original-price .result");
+    const discountEl = this.container.querySelector("#discount .result");
+    const finalEl = this.container.querySelector("#final-price .result");
+    const economyOf = document.querySelector("#conversor-discount p span");
+
+    const original = parseFloat(originalEl.textContent) || 0;
+    const discount = parseFloat(discountEl.textContent) || 0;
+    const final = parseFloat(finalEl.textContent) || 0;
+
+    const activeEl = this.container.querySelector(".result.click");
+
+    if (activeEl === originalEl || activeEl === discountEl) {
+      const newFinal = original - (discount / 100) * original;
+      finalEl.textContent = this.formatNumber(newFinal);
+      economyOf.textContent = original - newFinal;
+    } else if (activeEl === finalEl) {
+      if (original > 0) {
+        const newDiscount = ((original - final) / original) * 100;
+        discountEl.textContent = this.formatNumber(newDiscount);
+        economyOf.textContent = original - final;
+      }
+    }
+  }
+
+  formatNumber(num) {
+    if (isNaN(num)) return "1";
+    return num
+      .toFixed(8)
+      .replace(/\.?0+$/, "")
+      .replace(/\.$/, "");
+  }
+}
+
 class Temperature {
   constructor(temperatureTable) {
     this.temperatureTable = temperatureTable;
@@ -859,7 +949,7 @@ class Temperature {
 
       const converted = this.convertTemperature(fromValue, fromUnit, toUnit);
       if (!isNaN(converted)) {
-        result.textContent = converted.toFixed(6).replace(/\.?0+$/, "");
+        result.textContent = this.formatNumber(converted);
       }
     });
   }
@@ -974,10 +1064,10 @@ class IMC {
 
     this.heightResult.textContent = this.height;
 
-    const minIdealWeight = (18.5 * heightInMeters * heightInMeters).toFixed(1);
+    const minIdealWeight = (19 * heightInMeters * heightInMeters).toFixed(1);
     this.minWeightSuggestionResult.textContent = minIdealWeight;
 
-    const maxIdealWeight = (24.9 * heightInMeters * heightInMeters).toFixed(1);
+    const maxIdealWeight = (23 * heightInMeters * heightInMeters).toFixed(1);
     this.maxWeightSuggestionResult.textContent = maxIdealWeight;
 
     this.updateLabelOnBar(imc);
@@ -1039,6 +1129,8 @@ const imcTable = document.querySelector("#imc-calculator");
 const imcResultTable = document.querySelector("#imc-result-table");
 const imcTableAuxiliar = document.querySelector("#auxiliar");
 
+const conversorDiscount = document.querySelector("#conversor-discount");
+
 const calc = new Calculator(
   previousOperationText,
   inOperationText,
@@ -1046,10 +1138,13 @@ const calc = new Calculator(
 );
 
 const header = new Header(headerContainerBtns);
+
 const convCoinsOperations = new ConversorCoin(
   conversorTable,
   conversorTablebtns
 );
+
+const discount = new Discount();
 
 const temp = new Temperature(temperatureTable);
 
@@ -1300,6 +1395,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   conversorsInstances.temperature = new Temperature("#conversor-temperature");
+
+  conversorsInstances.discount = new Discount("#conversor-discount");
 });
 
 toggleThemeBtn.addEventListener("click", () => {
