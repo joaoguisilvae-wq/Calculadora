@@ -58,7 +58,7 @@ class Calculator {
     operationValue = null,
     operation = null,
     current = null,
-    previous = null
+    previous = null,
   ) {
     if (operationValue === null) {
       this.inOperationText.innerText += this.inOperation;
@@ -232,7 +232,7 @@ class Header {
 
   changeScreen(btn) {
     const isOnConversorDetail = [...conversors].some(
-      (section) => !section.classList.contains("hide")
+      (section) => !section.classList.contains("hide"),
     );
 
     const isMoreOptionsBtn = btn.dataset.action === "more-options";
@@ -276,7 +276,7 @@ class Header {
         history.classList.toggle("less-opacity");
         calculator.classList.toggle("less-opacity");
         conversors.forEach((section) =>
-          section.classList.toggle("less-opacity")
+          section.classList.toggle("less-opacity"),
         );
         conversorTable.classList.toggle("less-opacity");
         returnBTn.forEach((retBtn) => {
@@ -300,7 +300,7 @@ class Conversors {
   updateConversorScreen() {
     const results = this.container.querySelectorAll(".result");
     const selects = this.container.querySelectorAll(
-      "#options-container select"
+      "#options-container select",
     );
 
     selects.forEach((select) => {
@@ -353,7 +353,7 @@ class Conversors {
 
   handleConversion() {
     const selects = this.container.querySelectorAll(
-      "#options-container select"
+      "#options-container select",
     );
     const results = this.container.querySelectorAll(".result");
 
@@ -389,7 +389,7 @@ class Conversors {
   updateActiveValue(digit) {
     const results = this.container.querySelectorAll(".result");
     const activeResult = Array.from(results).find((result) =>
-      result.classList.contains("click")
+      result.classList.contains("click"),
     );
 
     if (!activeResult) return;
@@ -425,7 +425,7 @@ class ConversorCoin {
     conversorTable,
     conversorTablebtns,
     conversorResultBtn,
-    coinApiKey
+    coinApiKey,
   ) {
     this.conversorTable = conversorTable;
     this.conversorTablebtns = conversorTablebtns;
@@ -437,7 +437,7 @@ class ConversorCoin {
   async fetchRates() {
     try {
       const response = await fetch(
-        "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD"
+        "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD",
       );
 
       const data = await response.json();
@@ -472,7 +472,7 @@ class ConversorCoin {
 
   handleCoinConversor() {
     const selects = document.querySelectorAll(
-      "#conversor-coin #options-container select"
+      "#conversor-coin #options-container select",
     );
     const results = document.querySelectorAll("#conversor-coin .result");
 
@@ -506,7 +506,7 @@ class ConversorCoin {
   updateConversorCoinScreen() {
     const results = document.querySelectorAll("#conversor-coin .result");
     const selects = document.querySelectorAll(
-      "#conversor-coin #options-container select"
+      "#conversor-coin #options-container select",
     );
 
     results.forEach((result) => {
@@ -535,14 +535,14 @@ class ConversorCoin {
 
   async getCoins() {
     const selects = document.querySelectorAll(
-      "#conversor-coin #options-container select"
+      "#conversor-coin #options-container select",
     );
 
     selects.forEach((select) => (select.innerHTML = ""));
 
     try {
       const response = await fetch(
-        "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD"
+        "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD",
       );
 
       const data = await response.json();
@@ -823,7 +823,7 @@ class Discount {
     [originalEl, discountEl, finalEl].forEach((el) => {
       el.addEventListener("click", () => {
         [originalEl, discountEl, finalEl].forEach((e) =>
-          e.classList.remove("click")
+          e.classList.remove("click"),
         );
 
         el.classList.add("click");
@@ -1039,7 +1039,7 @@ class Temperature {
   updateConversorTempScreen() {
     const results = document.querySelectorAll("#conversor-temperature .result");
     const selects = document.querySelectorAll(
-      "#conversor-temperature #options-container select"
+      "#conversor-temperature #options-container select",
     );
 
     selects.forEach((select) => {
@@ -1117,7 +1117,7 @@ class Temperature {
 
   performConversion() {
     const selects = document.querySelectorAll(
-      "#conversor-temperature #options-container select"
+      "#conversor-temperature #options-container select",
     );
     const results = document.querySelectorAll("#conversor-temperature .result");
 
@@ -1145,7 +1145,7 @@ class Temperature {
   updateActiveValue(digit) {
     const results = document.querySelectorAll("#conversor-temperature .result");
     const activeResult = Array.from(results).find((r) =>
-      r.classList.contains("click")
+      r.classList.contains("click"),
     );
 
     if (!activeResult) return;
@@ -1298,7 +1298,7 @@ const numsTable = document.querySelector("#numbers-table");
 const numsTableBtns = document.querySelectorAll("#numbers-table button");
 
 const headerContainerBtns = document.querySelectorAll(
-  "#header-container button"
+  "#header-container button",
 );
 const calculator = document.querySelector("#calculator");
 const conversorTable = document.querySelector("#conversor-table");
@@ -1322,14 +1322,14 @@ const conversorDiscount = document.querySelector("#conversor-discount");
 const calc = new Calculator(
   previousOperationText,
   inOperationText,
-  doneOperationText
+  doneOperationText,
 );
 
 const header = new Header(headerContainerBtns);
 
 const convCoinsOperations = new ConversorCoin(
   conversorTable,
-  conversorTablebtns
+  conversorTablebtns,
 );
 
 const finance = new Finances();
@@ -1607,7 +1607,7 @@ numsTableBtns.forEach((btn) => {
 
     const visibleConversor = [...conversors].find(
       (section) =>
-        !section.classList.contains("hide") && section.id !== "conversor-coin"
+        !section.classList.contains("hide") && section.id !== "conversor-coin",
     );
 
     if (visibleConversor) {
