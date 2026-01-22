@@ -1,14 +1,3 @@
-Seu README está **muito bom**! Ele já transmite claramente o propósito do projeto, as funcionalidades, a estrutura e até limitações honestas. No entanto, com alguns pequenos ajustes de **formatação, clareza e profissionalismo**, ele pode ficar ainda mais impactante — especialmente se for visto por recrutadores, colegas ou futuros contribuidores.
-
-Aqui está uma **versão revisada e aprimorada**, mantendo 100% do seu conteúdo original, mas com:
-
-- Melhor formatação Markdown
-- Correções de pontuação e espaçamento
-- Links funcionais
-- Tom mais coeso
-- Organização visual mais limpa
-
----
 
 # 🧮 Calculadora + Conversores
 
@@ -19,8 +8,6 @@ Uma aplicação web multifuncional feita com **HTML, CSS e JavaScript puro**, co
 - Interface responsiva e navegação por abas
 
 Ideal para uso diário e como estudo de manipulação do DOM e organização de código com classes.
-
----
 
 ## ✨ Funcionalidades
 
@@ -50,8 +37,6 @@ Ideal para uso diário e como estudo de manipulação do DOM e organização de 
 - Cada entrada mostra: `expressão = resultado`
 - Persistência mesmo após fechar o navegador
 
----
-
 ## 🛠 Tecnologias
 
 - **HTML5** – Estrutura semântica
@@ -61,8 +46,6 @@ Ideal para uso diário e como estudo de manipulação do DOM e organização de 
   - Gerenciamento de estado com métodos como `updateScreen()`
   - Uso de `localStorage` para persistência
 - Navegação entre telas com classes `.hide` e `.less-opacity`
-
----
 
 ## 📁 Estrutura do Projeto
 
@@ -84,26 +67,16 @@ CALCULADORA/
 1. Clone ou baixe o projeto:  
    [https://github.com/joaoguisilvae-wq/Calculadora]
 2. Abra o arquivo `index.html` diretamente no navegador **(recomendado: Opera)**  
-   _Ou use um servidor local para evitar restrições:_
-   ```bash
-   npx serve
-   ```
-
-Pronto! A aplicação funciona **offline** e salva seu histórico automaticamente.
-
----
 
 ## ⚠️ Limitações Conhecidas
 
 - A calculadora **não avalia expressões complexas** (ex: `2 + 3 * 4` é calculado sequencialmente, não seguindo precedência matemática).
 - O código apresenta **repetições desnecessárias**, o que pode dificultar manutenção futura.
 
----
-
 ## 🤝 Contribuições
 
 Encontrou um bug? Tem uma ideia de melhoria?  
-Me chame no Instagram:
+Me chame no Instagram: joaoguixz0
 
 ---
 
