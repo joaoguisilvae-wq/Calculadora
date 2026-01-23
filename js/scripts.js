@@ -1294,8 +1294,8 @@ const doneOperationText = document.querySelector("#done-operation");
 const previousOperationText = document.querySelector("#previous-operation");
 const calcTable = document.querySelector("#calculate-table");
 const inOperationText = document.querySelector("#in-operation");
-const numsTable = document.querySelector("#numbers-table");
-const numsTableBtns = document.querySelectorAll("#numbers-table button");
+const numsTable = document.querySelector(".numbers-table");
+const numsTableBtns = document.querySelectorAll(".numbers-table button");
 
 const headerContainerBtns = document.querySelectorAll(
   "#header-container button",
