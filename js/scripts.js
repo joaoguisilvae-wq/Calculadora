@@ -58,7 +58,7 @@ class Calculator {
     operationValue = null,
     operation = null,
     current = null,
-    previous = null
+    previous = null,
   ) {
     if (operationValue === null) {
       this.inOperationText.innerText += this.inOperation;
@@ -232,7 +232,7 @@ class Header {
 
   changeScreen(btn) {
     const isOnConversorDetail = [...conversors].some(
-      (section) => !section.classList.contains("hide")
+      (section) => !section.classList.contains("hide"),
     );
 
     const isMoreOptionsBtn = btn.dataset.action === "more-options";
@@ -276,7 +276,7 @@ class Header {
         history.classList.toggle("less-opacity");
         calculator.classList.toggle("less-opacity");
         conversors.forEach((section) =>
-          section.classList.toggle("less-opacity")
+          section.classList.toggle("less-opacity"),
         );
         conversorTable.classList.toggle("less-opacity");
         returnBTn.forEach((retBtn) => {
@@ -300,7 +300,7 @@ class Conversors {
   updateConversorScreen() {
     const results = this.container.querySelectorAll(".result");
     const selects = this.container.querySelectorAll(
-      "#options-container select"
+      "#options-container select",
     );
 
     selects.forEach((select) => {
@@ -353,7 +353,7 @@ class Conversors {
 
   handleConversion() {
     const selects = this.container.querySelectorAll(
-      "#options-container select"
+      "#options-container select",
     );
     const results = this.container.querySelectorAll(".result");
 
@@ -389,7 +389,7 @@ class Conversors {
   updateActiveValue(digit) {
     const results = this.container.querySelectorAll(".result");
     const activeResult = Array.from(results).find((result) =>
-      result.classList.contains("click")
+      result.classList.contains("click"),
     );
 
     if (!activeResult) return;
@@ -425,7 +425,7 @@ class ConversorCoin {
     conversorTable,
     conversorTablebtns,
     conversorResultBtn,
-    coinApiKey
+    coinApiKey,
   ) {
     this.conversorTable = conversorTable;
     this.conversorTablebtns = conversorTablebtns;
@@ -437,7 +437,7 @@ class ConversorCoin {
   async fetchRates() {
     try {
       const response = await fetch(
-        "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD"
+        "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD",
       );
 
       const data = await response.json();
@@ -472,7 +472,7 @@ class ConversorCoin {
 
   handleCoinConversor() {
     const selects = document.querySelectorAll(
-      "#conversor-coin #options-container select"
+      "#conversor-coin #options-container select",
     );
     const results = document.querySelectorAll("#conversor-coin .result");
 
@@ -506,7 +506,7 @@ class ConversorCoin {
   updateConversorCoinScreen() {
     const results = document.querySelectorAll("#conversor-coin .result");
     const selects = document.querySelectorAll(
-      "#conversor-coin #options-container select"
+      "#conversor-coin #options-container select",
     );
 
     results.forEach((result) => {
@@ -535,14 +535,14 @@ class ConversorCoin {
 
   async getCoins() {
     const selects = document.querySelectorAll(
-      "#conversor-coin #options-container select"
+      "#conversor-coin #options-container select",
     );
 
     selects.forEach((select) => (select.innerHTML = ""));
 
     try {
       const response = await fetch(
-        "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD"
+        "https://v6.exchangerate-api.com/v6/80256d7727156d2472f5065b/latest/USD",
       );
 
       const data = await response.json();
@@ -761,7 +761,7 @@ class Discount {
     [originalEl, discountEl, finalEl].forEach((el) => {
       el.addEventListener("click", () => {
         [originalEl, discountEl, finalEl].forEach((e) =>
-          e.classList.remove("click")
+          e.classList.remove("click"),
         );
 
         el.classList.add("click");
@@ -831,6 +831,132 @@ class Discount {
   }
 }
 
+class NumberSistem {
+  constructor() {
+    this.results = document.querySelectorAll(".result");
+    this.selects = document.querySelectorAll("select");
+
+    this.activeIndex = 0;
+    this.results[0]?.classList.add("click");
+
+    this.bindEvents();
+    this.handleConversion();
+  }
+
+  bindEvents() {
+    this.results.forEach((result, i) => {
+      result.addEventListener("click", () => {
+        this.results.forEach((r) => r.classList.remove("click"));
+        result.classList.add("click");
+        this.activeIndex = i;
+      });
+    });
+
+    this.selects.forEach((select) => {
+      select.addEventListener("change", () => this.handleConversion());
+    });
+  }
+
+  toDecimal(value, fromBase) {
+    try {
+      if (fromBase === "dec") return parseInt(value, 10);
+      if (fromBase === "bin") return parseInt(value, 2);
+      if (fromBase === "oct") return parseInt(value, 8);
+      if (fromBase === "hex") return parseInt(value, 16);
+    } catch (e) {}
+    return NaN;
+  }
+
+  fromDecimal(value, toBase) {
+    if (isNaN(value)) return "0";
+    if (toBase === "dec") return value.toString();
+    if (toBase === "bin") return value.toString(2);
+    if (toBase === "oct") return value.toString(8);
+    if (toBase === "hex") return value.toString(16).toUpperCase();
+    return "0";
+  }
+
+  isValidForBase(value, base) {
+    if (value === "") return false;
+    const regexMap = {
+      bin: /^[01]+$/,
+      oct: /^[0-7]+$/,
+      dec: /^\d+$/,
+      hex: /^[0-9A-Fa-f]+$/,
+    };
+    return regexMap[base]?.test(value) ?? false;
+  }
+
+  handleConversion() {
+    const activeResult = this.results[this.activeIndex];
+    const fromBase = this.selects[this.activeIndex]?.value;
+    let inputValue = activeResult?.textContent.trim() || "0";
+
+    if (inputValue.length > 1) {
+      inputValue = inputValue.replace(/^0+(?=\d)/, "");
+    }
+    if (inputValue === "") inputValue = "0";
+
+    if (!this.isValidForBase(inputValue, fromBase)) {
+      this.results.forEach((r, i) => {
+        if (i !== this.activeIndex) r.textContent = "0";
+      });
+      return;
+    }
+
+    // Converte para decimal
+    const decimalValue = this.toDecimal(inputValue, fromBase);
+    if (isNaN(decimalValue)) {
+      this.results.forEach((r, i) => {
+        if (i !== this.activeIndex) r.textContent = "0";
+      });
+      return;
+    }
+
+    this.results.forEach((result, i) => {
+      if (i === this.activeIndex) return;
+      const toBase = this.selects[i]?.value;
+      result.textContent = this.fromDecimal(decimalValue, toBase);
+    });
+  }
+
+  updateActiveValue(digit) {
+    const activeResult = this.results[this.activeIndex];
+    if (!activeResult) return;
+
+    let currentValue = activeResult.textContent.trim();
+    const currentBase = this.selects[this.activeIndex]?.value;
+
+    const validDigits = {
+      bin: "01",
+      oct: "01234567",
+      dec: "0123456789",
+      hex: "0123456789ABCDEF",
+    };
+
+    const allowed = validDigits[currentBase] || "0123456789";
+
+    if (digit === "DEL") {
+      currentValue = currentValue.slice(0, -1) || "0";
+    } else if (digit === "AC") {
+      currentValue = "0";
+    } else if (digit === ".") {
+      return;
+    } else if (allowed.includes(digit.toUpperCase())) {
+      if (currentValue === "0") {
+        currentValue = digit;
+      } else {
+        currentValue += digit;
+      }
+    } else {
+      return;
+    }
+
+    activeResult.textContent = currentValue;
+    this.handleConversion();
+  }
+}
+
 class Temperature {
   constructor(temperatureTable) {
     this.temperatureTable = temperatureTable;
@@ -851,7 +977,7 @@ class Temperature {
   updateConversorTempScreen() {
     const results = document.querySelectorAll("#conversor-temperature .result");
     const selects = document.querySelectorAll(
-      "#conversor-temperature #options-container select"
+      "#conversor-temperature #options-container select",
     );
 
     selects.forEach((select) => {
@@ -929,7 +1055,7 @@ class Temperature {
 
   performConversion() {
     const selects = document.querySelectorAll(
-      "#conversor-temperature #options-container select"
+      "#conversor-temperature #options-container select",
     );
     const results = document.querySelectorAll("#conversor-temperature .result");
 
@@ -957,7 +1083,7 @@ class Temperature {
   updateActiveValue(digit) {
     const results = document.querySelectorAll("#conversor-temperature .result");
     const activeResult = Array.from(results).find((r) =>
-      r.classList.contains("click")
+      r.classList.contains("click"),
     );
 
     if (!activeResult) return;
@@ -1106,11 +1232,11 @@ const doneOperationText = document.querySelector("#done-operation");
 const previousOperationText = document.querySelector("#previous-operation");
 const calcTable = document.querySelector("#calculate-table");
 const inOperationText = document.querySelector("#in-operation");
-const numsTable = document.querySelector("#numbers-table");
-const numsTableBtns = document.querySelectorAll("#numbers-table button");
+const numsTable = document.querySelector(".numbers-table");
+const numsTableBtns = document.querySelectorAll(".numbers-table button");
 
 const headerContainerBtns = document.querySelectorAll(
-  "#header-container button"
+  "#header-container button",
 );
 const calculator = document.querySelector("#calculator");
 const conversorTable = document.querySelector("#conversor-table");
@@ -1134,14 +1260,14 @@ const conversorDiscount = document.querySelector("#conversor-discount");
 const calc = new Calculator(
   previousOperationText,
   inOperationText,
-  doneOperationText
+  doneOperationText,
 );
 
 const header = new Header(headerContainerBtns);
 
 const convCoinsOperations = new ConversorCoin(
   conversorTable,
-  conversorTablebtns
+  conversorTablebtns,
 );
 
 const discount = new Discount();
@@ -1409,7 +1535,7 @@ numsTableBtns.forEach((btn) => {
 
     const visibleConversor = [...conversors].find(
       (section) =>
-        !section.classList.contains("hide") && section.id !== "conversor-coin"
+        !section.classList.contains("hide") && section.id !== "conversor-coin",
     );
 
     if (visibleConversor) {

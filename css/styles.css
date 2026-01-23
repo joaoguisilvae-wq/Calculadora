@@ -169,7 +169,7 @@ option {
 }
 
 /* Numbers table */
-#numbers-table {
+.numbers-table {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -178,7 +178,7 @@ option {
   text-align: center;
 }
 
-#numbers-table button {
+.numbers-table button {
   width: 110px;
   height: 65px;
   background-color: var(--button-background);
@@ -191,25 +191,25 @@ option {
   transition: 0.1s;
 }
 
-#numbers-table button:active {
+.numbers-table button:active {
   background-color: var(--button-active);
   scale: 1.03;
 }
 
-#numbers-table .block {
+.numbers-table .block {
   justify-content: space-between;
   gap: 10px;
 }
 
-#numbers-table .icon {
+.numbers-table .icon {
   color: var(--icon-color);
 }
 
-#numbers-table .number {
+.numbers-table .number {
   font-weight: 100;
 }
 
-#numbers-table #equal-btn {
+.numbers-table #equal-btn {
   background-color: var(--equal-background);
   color: var(--equal-text);
 }
@@ -264,7 +264,7 @@ option {
   scale: 1;
 }
 
-.conversor #numbers-table {
+.conversor .numbers-table {
   margin-top: 100px;
 }
 
@@ -346,7 +346,7 @@ option {
   margin-left: 35px;
 }
 
-#discount-calculator #numbers-table {
+#discount-calculator .numbers-table {
   margin-top: 10px;
 }
 
@@ -524,11 +524,11 @@ option {
     height: 300px;
   }
 
-  #numbers-table {
+  .numbers-table {
     width: 50%;
   }
 
-  #numbers-table button {
+  .numbers-table button {
     height: 60px;
     margin: 5px;
   }
@@ -537,7 +537,7 @@ option {
     width: 100%;
   }
 
-  .conversor #numbers-table {
+  .conversor .numbers-table {
     margin-top: 0px;
   }
 
@@ -565,11 +565,11 @@ option {
     height: 80px;
   }
 
-  #numbers-table {
+  .numbers-table {
     width: 80%;
   }
 
-  #numbers-table button {
+  .numbers-table button {
     height: 60px;
     margin: 5px;
   }
@@ -580,7 +580,7 @@ option {
     padding: 0 25px;
   }
 
-  #numbers-table {
+  .numbers-table {
     flex-direction: row;
     gap: 15px;
     width: 90%;
@@ -590,7 +590,7 @@ option {
     text-align: center;
   }
 
-  #numbers-table button {
+  .numbers-table button {
     width: 45px;
     height: 35px;
     margin: 5px;
