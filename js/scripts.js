@@ -749,6 +749,66 @@ class ConversorCoin {
   }
 }
 
+class DateCalculator {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.fromInput = document.querySelector("#from");
+    this.toInput = document.querySelector("#to");
+    this.calcBtn = document.querySelector("#calculate");
+
+    this.yearsSpan = document.querySelector(".date:nth-child(1) span");
+    this.monthsSpan = document.querySelector(".date:nth-child(2) span");
+    this.daysSpan = document.querySelector(".date:nth-child(3) span");
+
+    if (this.calcBtn) {
+      this.calcBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.calculateDifference();
+      });
+    }
+  }
+
+  calculateDifference() {
+    const fromValue = this.fromInput.value;
+    const toValue = this.toInput.value;
+
+    if (!fromValue || !toValue) {
+      alert("Selecione ambas as datas.");
+      return;
+    }
+
+    const fromDate = new Date(fromValue);
+    const toDate = new Date(toValue);
+
+    if (fromDate > toDate) {
+      alert("A data 'De' não pode ser maior que a data 'Até'.");
+      return;
+    }
+
+    let years = toDate.getFullYear() - fromDate.getFullYear();
+    let months = toDate.getMonth() - fromDate.getMonth();
+    let days = toDate.getDate() - fromDate.getDate();
+
+    if (days < 0) {
+      months--;
+      const prevMonth = new Date(toDate.getFullYear(), toDate.getMonth(), 0);
+      days += prevMonth.getDate();
+    }
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    this.yearsSpan.textContent = years;
+    this.monthsSpan.textContent = months;
+    this.daysSpan.textContent = days;
+  }
+}
+
 class Discount {
   constructor() {
     this.container = document.querySelector("#conversor-discount");
@@ -757,16 +817,22 @@ class Discount {
     const originalEl = this.container.querySelector("#original-price .result");
     const discountEl = this.container.querySelector("#discount .result");
     const finalEl = this.container.querySelector("#final-price .result");
+    const elements = [originalEl, discountEl, finalEl];
 
-    [originalEl, discountEl, finalEl].forEach((el) => {
-      el.addEventListener("click", () => {
-        [originalEl, discountEl, finalEl].forEach((e) =>
-          e.classList.remove("click"),
+    elements.forEach((element) => {
+      element.addEventListener("click", () => {
+        [originalEl, discountEl, finalEl].forEach((element) =>
+          element.classList.remove("click"),
         );
 
-        el.classList.add("click");
+        element.classList.add("click");
+        this.performCalc();
       });
     });
+
+    if (originalEl) {
+      originalEl.classList.add("click");
+    }
   }
 
   updateActiveValue(digit) {
@@ -833,8 +899,9 @@ class Discount {
 
 class NumberSistem {
   constructor() {
-    this.results = document.querySelectorAll(".result");
-    this.selects = document.querySelectorAll("select");
+    this.container = document.querySelector("#number-sistem");
+    this.results = this.container.querySelectorAll(".result");
+    this.selects = this.container.querySelectorAll("select");
 
     this.activeIndex = 0;
     this.results[0]?.classList.add("click");
@@ -849,11 +916,26 @@ class NumberSistem {
         this.results.forEach((r) => r.classList.remove("click"));
         result.classList.add("click");
         this.activeIndex = i;
+        this.handleConversion();
       });
     });
 
     this.selects.forEach((select) => {
-      select.addEventListener("change", () => this.handleConversion());
+      select.addEventListener("change", () => {
+        const hexDigits = this.container.querySelectorAll(".hex-digit");
+        const numbers = this.container.querySelectorAll(".number");
+
+        const elementsToModify = [...hexDigits, ...numbers];
+
+        elementsToModify.forEach((element) => {
+          if (element && element.classList) {
+            element.classList.add("less-opacity");
+            this.changeTableVisibility();
+          }
+        });
+
+        this.handleConversion();
+      });
     });
   }
 
@@ -937,13 +1019,15 @@ class NumberSistem {
     const allowed = validDigits[currentBase] || "0123456789";
 
     if (digit === "DEL") {
-      currentValue = currentValue.slice(0, -1) || "0";
+      currentValue = currentValue.slice(0, -1) || "1";
     } else if (digit === "AC") {
-      currentValue = "0";
+      currentValue = "1";
     } else if (digit === ".") {
       return;
+    } else if (digit === "00") {
+      currentValue += digit;
     } else if (allowed.includes(digit.toUpperCase())) {
-      if (currentValue === "0") {
+      if (currentValue === "1") {
         currentValue = digit;
       } else {
         currentValue += digit;
@@ -954,6 +1038,99 @@ class NumberSistem {
 
     activeResult.textContent = currentValue;
     this.handleConversion();
+  }
+
+  changeTableVisibility() {
+    const activeResult = this.results[this.activeIndex];
+
+    if (!activeResult) {
+      console.warn("Nenhum resultado ativo encontrado.");
+      return null;
+    }
+
+    const index = this.activeIndex;
+
+    const correspondingSelect = this.selects[index];
+
+    if (!correspondingSelect) {
+      console.warn(`Nenhum select encontrado para o índice ${index}.`);
+      return null;
+    }
+
+    const selectedValue = correspondingSelect.value;
+
+    switch (selectedValue) {
+      case "bin":
+        const validNumbersBin = [
+          // Nome de variável diferente
+          this.container.querySelector(".one"),
+          this.container.querySelector(".zero"),
+          this.container.querySelector(".double-zero"),
+        ];
+        validNumbersBin.forEach((num) => {
+          if (num) {
+            num.classList.remove("less-opacity");
+          }
+        });
+        break;
+
+      case "oct":
+        const validNumbersOct = this.container.querySelectorAll(".number");
+        validNumbersOct.forEach((button) => {
+          if (button && button.classList) {
+            button.classList.remove("less-opacity");
+          }
+        });
+
+        const eight = this.container.querySelector(".eight");
+        const nine = this.container.querySelector(".nine");
+
+        const invalidNumbers = [eight, nine];
+
+        invalidNumbers.forEach((num) => {
+          if (num && num.classList) {
+            num.classList.add("less-opacity");
+          }
+        });
+        break;
+
+      case "dec":
+        const validNumbersDec = this.container.querySelectorAll(".number");
+        validNumbersDec.forEach((num) => {
+          if (num) {
+            num.classList.remove("less-opacity");
+          }
+        });
+        break;
+
+      case "hex":
+        const validNumbersHex = [
+          this.container.querySelectorAll(".number"),
+          this.container.querySelectorAll(".hex-digit"),
+        ];
+
+        validNumbersHex.forEach((classes) => {
+          if (classes) {
+            classes.forEach((num) => {
+              num.classList.remove("less-opacity");
+            });
+          }
+        });
+        break;
+
+      default:
+        const elementsToModify = [
+          ...this.container.querySelectorAll(".operation"),
+          ...this.container.querySelectorAll(".hex-digit"),
+          ...this.container.querySelectorAll(".number"),
+        ];
+        elementsToModify.forEach((el) => {
+          if (el && el.classList) {
+            el.classList.add("less-opacity");
+          }
+        });
+        break;
+    }
   }
 }
 
@@ -1522,7 +1699,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   conversorsInstances.temperature = new Temperature("#conversor-temperature");
 
+  conversorsInstances.date = new DateCalculator("#conversor-date");
+
   conversorsInstances.discount = new Discount("#conversor-discount");
+
+  conversorsInstances["number-sistem"] = new NumberSistem("#number-sistem");
 });
 
 toggleThemeBtn.addEventListener("click", () => {
@@ -1611,6 +1792,13 @@ returnBTn.forEach((btn) => {
   btn.addEventListener("click", () => {
     conversors.forEach((section) => section.classList.add("hide"));
     conversorTable.classList.remove("hide");
+  });
+});
+
+results.forEach((result) => {
+  result.addEventListener("click", (e) => {
+    const clicked = e.target;
+    clicked.textContent = 1;
   });
 });
 
