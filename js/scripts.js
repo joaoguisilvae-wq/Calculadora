@@ -1447,7 +1447,13 @@ const convCoinsOperations = new ConversorCoin(
   conversorTablebtns,
 );
 
+const finance = new Finances();
+
+const dateCalculator = new DateCalculator();
+
 const discount = new Discount();
+
+const numberSistem = new NumberSistem();
 
 const temp = new Temperature(temperatureTable);
 
@@ -1720,7 +1726,7 @@ numsTableBtns.forEach((btn) => {
     );
 
     if (visibleConversor) {
-      const type = visibleConversor.id.replace("conversor-", "");
+      const type = visibleConversor.id;
       const instance = conversorsInstances[type];
       if (instance && typeof instance.updateActiveValue === "function") {
         instance.updateActiveValue(value);
