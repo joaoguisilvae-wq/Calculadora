@@ -1446,8 +1446,6 @@ const convCoinsOperations = new ConversorCoin(
   conversorTablebtns,
 );
 
-const finance = new Finances();
-
 const dateCalculator = new DateCalculator();
 
 const discount = new Discount();
