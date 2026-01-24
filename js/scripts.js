@@ -241,7 +241,6 @@ class Header {
     btn.classList.add("focus");
 
     const screen = btn.dataset.screen;
-    const swipeScreen = document.querySelector("#swipe-screen");
 
     switch (screen) {
       case "calculator":
