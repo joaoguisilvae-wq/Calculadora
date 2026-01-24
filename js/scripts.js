@@ -269,7 +269,7 @@ class Header {
         break;
 
       case "swipe-screen":
-        alert("Isso colocaria sua tela ficar no modo janela");
+        alert("Isso deixaria sua tela no modo janela");
         break;
       default:
         moreOptionsContainer.classList.toggle("hide");
