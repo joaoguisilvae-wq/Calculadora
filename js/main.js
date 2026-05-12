@@ -1546,8 +1546,6 @@ numsTableBtns.forEach((btn) => {
   });
 });
 
-calc.saveInHistory();
-
 headerContainerBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     header.changeScreen(btn);
