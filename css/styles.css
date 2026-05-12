@@ -14,7 +14,7 @@
   --clicked: #ebb821;
 }
 
-body.light {
+body[data-theme="light"] {
   --background-color: #6b6145;
   --button-background: #ab9143;
   --highlighted-text: #2044ea;
