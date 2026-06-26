@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculadora</title>
     <!-- Icones -->
@@ -17,882 +18,877 @@
       rel="stylesheet"
       href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
-    />
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/styles.css" />
-    <!-- JS -->
-    <script type="module" src="js/main.js" defer></script>
   </head>
   <body>
-    <div id="header-container">
-      <header>
-        <button data-screen="swipe-screen" id="swipe-screen">
-          <i
-            class="fi fi-ts-arrow-up-right-and-arrow-down-left-from-center"
-          ></i>
-        </button>
-        <button data-screen="calculator" id="calc-option" class="focus">
-          Calculadora
-        </button>
-        <button data-screen="conversor" id="conv-options">Conversor</button
-        ><button
-          data-screen="more-options"
-          id="more-options"
-          data-action="more-options"
-        >
-          <i class="fi fi-tr-square-ellipsis-vertical"></i>
-        </button>
-        <div id="more-options-container" class="hide">
-          <button data-screen="history" id="history-btn">Histórico</button>
-          <button id="toggle-theme-btn">Mudar tema</button>
-        </div>
-      </header>
-    </div>
-    <div id="history" class="hide"></div>
-    <div id="calculator">
-      <div id="calculate-table">
-        <div id="done-operation"></div>
-        <div id="in-operation"></div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button>DEL</button>
-          <button>%</button>
-          <button>/</button>
-        </div>
-        <div class="block">
-          <button>7</button>
-          <button>8</button>
-          <button>9</button>
-          <button>*</button>
-        </div>
-        <div class="block">
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
-          <button>-</button>
-        </div>
-        <div class="block">
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>+</button>
-        </div>
-        <div class="block">
-          <button>
-            <i class="fi fi-tr-arrows-repeat"></i>
+    <div id="app">
+      <div id="header-container">
+        <header>
+          <button data-screen="swipe-screen" id="swipe-screen">
+            <i
+              class="fi fi-ts-arrow-up-right-and-arrow-down-left-from-center"
+            ></i>
           </button>
-          <button>0</button>
-          <button>.</button>
-          <button>=</button>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-table" class="hide">
-      <div class="conversor-theme">
-        <button data-target="conversor-coin">
-          <i class="fi fi-ts-coins"></i> Moeda
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-length">
-          <i class="fi fi-ts-laptop-code"></i> Comprimento
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-mass">
-          <i class="fi fi-ts-equality"></i> Massa
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-area">
-          <i class="fi fi-tr-pencil-ruler"></i> Área
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-time">
-          <i class="fi fi-ts-clock-three"></i> Tempo
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-data">
-          <i class="fi fi-tr-envelope-open-text"></i> Dados
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-date">
-          <i class="fi fi-tr-calendar-minus"></i> Data
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-discount">
-          <i class="fi fi-ts-badge-percent"></i> Desconto
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-volume">
-          <i class="fi fi-ts-coin"></i> Volume
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="number-sistem">
-          <i class="fi fi-tr-arrows-repeat"></i> Sistema numérico
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-velocity">
-          <i class="fi fi-tr-running"></i> Velocidade
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="conversor-temperature">
-          <i class="fi fi-ts-temperature-high"></i> Temperatura
-        </button>
-      </div>
-      <div class="conversor-theme">
-        <button data-target="imc-calculator">
-          <i class="fi fi-tr-restaurant"></i> IMC
-        </button>
-      </div>
-    </div>
-    <div id="conversor-coin" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Moeda</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-coin" id="first-coin">
-            <option value="first-coin">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-coin" id="second-coin">
-            <option value="second-coin">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="third-coin" id="third-coin">
-            <option value="third-coin">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
+          <button data-screen="calculator" id="calc-option" class="focus">
+            Calculadora
           </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-length" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Comprimento</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-length" id="first-length">
-            <option value="first-length">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-length" id="second-length">
-            <option value="second-length">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
+          <button data-screen="conversor" id="conv-options">Conversor</button
+          ><button
+            data-screen="more-options"
+            id="more-options"
+            data-action="more-options"
+          >
+            <i class="fi fi-tr-square-ellipsis-vertical"></i>
           </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-mass" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Massa</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-mass" id="first-mass">
-            <option value="first-mass">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-mass" id="second-mass">
-            <option value="second-mass">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
-          </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-area" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Área</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-area" id="first-area">
-            <option value="first-area">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-area" id="second-area">
-            <option value="second-area">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
-          </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-time" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Tempo</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-time" id="first-time">
-            <option value="first-time">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-time" id="second-time">
-            <option value="second-time">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
-          </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-data" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Dados</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-data" id="first-data">
-            <option value="first-data">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-data" id="second-data">
-            <option value="second-data">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
-          </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-date" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Data</h2>
-      </div>
-      <div id="date-input">
-        <h2>
-          <label>De <input type="date" id="from" /></label>
-        </h2>
-        <h2>
-          <label>Até <input type="date" id="to" /></label>
-        </h2>
-
-        <button id="calculate" type="submit">Calcular</button>
-      </div>
-      <h2>Diferença</h2>
-      <div id="difference-container">
-        <div class="date">
-          <p>Anos</p>
-          <span>0</span>
-        </div>
-        <div class="date">
-          <p>Meses</p>
-          <span>0</span>
-        </div>
-        <div class="date">
-          <p>Dias</p>
-          <span>0</span>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-discount" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Desconto</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <h3>Preço original</h3>
-          <div id="original-price">
-            <span class="result">100</span>
+          <div id="more-options-container" class="hide">
+            <button data-screen="history" id="history-btn">Histórico</button>
+            <button id="toggle-theme-btn">Mudar tema</button>
           </div>
-        </div>
-        <div class="form-control">
-          <h3>Desconto (%)</h3>
-          <div id="discount">
-            <span class="result">10</span>
-          </div>
-        </div>
-        <div class="form-control">
-          <h3>Preço final</h3>
-          <div id="final-price">
-            <span class="result">90</span>
-          </div>
-        </div>
+        </header>
       </div>
-      <p>Economia de <span>10</span></p>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
+      <div id="history" class="hide"></div>
+      <div id="calculator">
+        <div id="calculate-table">
+          <div id="done-operation"></div>
+          <div id="in-operation"></div>
         </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-        </div>
-        <div class="block">
-          <button class="number double-zero">00</button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <div class="block" id="diferent-block">
+        <div class="numbers-table">
+          <div class="block">
             <button class="ac-btn">AC</button>
-            <button class="operation delete-btn">DEL</button>
+            <button>DEL</button>
+            <button>%</button>
+            <button>/</button>
+          </div>
+          <div class="block">
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button>*</button>
+          </div>
+          <div class="block">
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>-</button>
+          </div>
+          <div class="block">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>+</button>
+          </div>
+          <div class="block">
+            <button>
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button>0</button>
+            <button>.</button>
+            <button>=</button>
           </div>
         </div>
       </div>
-    </div>
-    <div id="conversor-volume" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Volume</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-volume" id="first-volume">
-            <option value="first-volume">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-volume" id="second-volume">
-            <option value="second-volume">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
+      <div id="conversor-table" class="hide">
+        <div class="conversor-theme">
+          <button data-target="conversor-coin">
+            <i class="fi fi-ts-coins"></i> Moeda
           </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
         </div>
-      </div>
-    </div>
-    <div id="number-sistem" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Sistema numérico</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-number" id="first-number">
-            <option value="bin">Binário</option>
-            <option value="oct">Octal</option>
-            <option value="dec" selected>Decimal</option>
-            <option value="hex">Hexadecimal</option>
-          </select>
-          <span class="result click">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-number" id="second-number">
-            <option value="bin">Binário</option>
-            <option value="oct">Octal</option>
-            <option value="dec" selected>Decimal</option>
-            <option value="hex">Hexadecimal</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="operation ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="hex-digit less-opacity f-btn">F</button>
-          <button class="hex-digit less-opacity e-btn">E</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="hex-digit less-opacity d-btn">D</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="hex-digit less-opacity c-btn">C</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="hex-digit less-opacity b-btn">B</button>
-        </div>
-        <div class="block">
-          <button class="number double-zero">00</button>
-          <button class="number zero">0</button>
-          <button class="dot-btn less-opacity">.</button>
-          <button class="hex-digit less-opacity a-btn">A</button>
-        </div>
-      </div>
-    </div>
-    <div id="conversor-velocity" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Velocidade</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select name="first-velocity" id="first-velocity">
-            <option value="first-velocity">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select name="second-velocity" id="second-velocity">
-            <option value="second-velocity">a</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
+        <div class="conversor-theme">
+          <button data-target="conversor-length">
+            <i class="fi fi-ts-laptop-code"></i> Comprimento
           </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
         </div>
-      </div>
-    </div>
-    <div id="conversor-temperature" class="conversor hide">
-      <div class="header-div">
-        <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-        <h2>Temperatura</h2>
-      </div>
-      <div id="options-container">
-        <div class="form-control">
-          <select id="unit-from">
-            <option value="c">Grau Celsius (°C)</option>
-            <option value="f">Grau Fahrenheit (°F)</option>
-            <option value="k">Kelvin (K)</option>
-            <option value="r">Grau Rankine (°R)</option>
-            <option value="re">Grau Réaumur (°Ré)</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-        <div class="form-control">
-          <select id="unit-to">
-            <option value="c">Grau Celsius (°C)</option>
-            <option value="f">Grau Fahrenheit (°F)</option>
-            <option value="k">Kelvin (K)</option>
-            <option value="r">Grau Rankine (°R)</option>
-            <option value="re">Grau Réaumur (°Ré)</option>
-          </select>
-          <span class="result">1</span>
-        </div>
-      </div>
-      <div class="numbers-table">
-        <div class="block">
-          <button class="ac-btn">AC</button>
-          <button class="operation delete-btn">DEL</button>
-          <button class="operation percentage-btn">%</button>
-          <button class="operation divider-btn">/</button>
-        </div>
-        <div class="block">
-          <button class="number seven">7</button>
-          <button class="number eight">8</button>
-          <button class="number nine">9</button>
-          <button class="operation multiplication-btn">*</button>
-        </div>
-        <div class="block">
-          <button class="number four">4</button>
-          <button class="number five">5</button>
-          <button class="number six">6</button>
-          <button class="operation subtraction-btn">-</button>
-        </div>
-        <div class="block">
-          <button class="number one">1</button>
-          <button class="number two">2</button>
-          <button class="number three">3</button>
-          <button class="operation sum-btn">+</button>
-        </div>
-        <div class="block">
-          <button class="operation swipe-numbers-table">
-            <i class="fi fi-tr-arrows-repeat"></i>
+        <div class="conversor-theme">
+          <button data-target="conversor-mass">
+            <i class="fi fi-ts-equality"></i> Massa
           </button>
-          <button class="number zero">0</button>
-          <button class="dot-btn operation">.</button>
-          <button class="equal-btn">=</button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="conversor-area">
+            <i class="fi fi-tr-pencil-ruler"></i> Área
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="conversor-time">
+            <i class="fi fi-ts-clock-three"></i> Tempo
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="conversor-data">
+            <i class="fi fi-tr-envelope-open-text"></i> Dados
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="conversor-date">
+            <i class="fi fi-tr-calendar-minus"></i> Data
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="conversor-discount">
+            <i class="fi fi-ts-badge-percent"></i> Desconto
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="conversor-volume">
+            <i class="fi fi-ts-coin"></i> Volume
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="number-sistem">
+            <i class="fi fi-tr-arrows-repeat"></i> Sistema numérico
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="conversor-velocity">
+            <i class="fi fi-tr-running"></i> Velocidade
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="conversor-temperature">
+            <i class="fi fi-ts-temperature-high"></i> Temperatura
+          </button>
+        </div>
+        <div class="conversor-theme">
+          <button data-target="imc-calculator">
+            <i class="fi fi-tr-restaurant"></i> IMC
+          </button>
         </div>
       </div>
-    </div>
-    <div id="imc-calculator" class="conversor hide">
-      <div id="auxiliar">
+      <div id="conversor-coin" class="conversor hide">
         <div class="header-div">
           <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-          <h2>IMC</h2>
+          <h2>Moeda</h2>
         </div>
-        <div id="form">
-          <form>
-            <div id="form-control">
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-coin" id="first-coin">
+              <option value="first-coin">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-coin" id="second-coin">
+              <option value="second-coin">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="third-coin" id="third-coin">
+              <option value="third-coin">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-length" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Comprimento</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-length" id="first-length">
+              <option value="first-length">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-length" id="second-length">
+              <option value="second-length">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-mass" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Massa</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-mass" id="first-mass">
+              <option value="first-mass">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-mass" id="second-mass">
+              <option value="second-mass">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-area" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Área</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-area" id="first-area">
+              <option value="first-area">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-area" id="second-area">
+              <option value="second-area">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-time" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Tempo</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-time" id="first-time">
+              <option value="first-time">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-time" id="second-time">
+              <option value="second-time">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-data" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Dados</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-data" id="first-data">
+              <option value="first-data">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-data" id="second-data">
+              <option value="second-data">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-date" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Data</h2>
+        </div>
+        <div id="date-input">
+          <h2>
+            <label>De <input type="date" id="from" /></label>
+          </h2>
+          <h2>
+            <label>Até <input type="date" id="to" /></label>
+          </h2>
+
+          <button id="calculate" type="submit">Calcular</button>
+        </div>
+        <h2>Diferença</h2>
+        <div id="difference-container">
+          <div class="date">
+            <p>Anos</p>
+            <span>0</span>
+          </div>
+          <div class="date">
+            <p>Meses</p>
+            <span>0</span>
+          </div>
+          <div class="date">
+            <p>Dias</p>
+            <span>0</span>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-discount" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Desconto</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <h3>Preço original</h3>
+            <div id="original-price">
+              <span class="result">100</span>
+            </div>
+          </div>
+          <div class="form-control">
+            <h3>Desconto (%)</h3>
+            <div id="discount">
+              <span class="result">10</span>
+            </div>
+          </div>
+          <div class="form-control">
+            <h3>Preço final</h3>
+            <div id="final-price">
+              <span class="result">90</span>
+            </div>
+          </div>
+        </div>
+        <p>Economia de <span>10</span></p>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+          </div>
+          <div class="block">
+            <button class="number double-zero">00</button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <div class="block" id="diferent-block">
+              <button class="ac-btn">AC</button>
+              <button class="operation delete-btn">DEL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-volume" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Volume</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-volume" id="first-volume">
+              <option value="first-volume">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-volume" id="second-volume">
+              <option value="second-volume">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="number-sistem" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Sistema numérico</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-number" id="first-number">
+              <option value="bin">Binário</option>
+              <option value="oct">Octal</option>
+              <option value="dec" selected>Decimal</option>
+              <option value="hex">Hexadecimal</option>
+            </select>
+            <span class="result click">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-number" id="second-number">
+              <option value="bin">Binário</option>
+              <option value="oct">Octal</option>
+              <option value="dec" selected>Decimal</option>
+              <option value="hex">Hexadecimal</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="operation ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="hex-digit less-opacity f-btn">F</button>
+            <button class="hex-digit less-opacity e-btn">E</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="hex-digit less-opacity d-btn">D</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="hex-digit less-opacity c-btn">C</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="hex-digit less-opacity b-btn">B</button>
+          </div>
+          <div class="block">
+            <button class="number double-zero">00</button>
+            <button class="number zero">0</button>
+            <button class="dot-btn less-opacity">.</button>
+            <button class="hex-digit less-opacity a-btn">A</button>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-velocity" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Velocidade</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select name="first-velocity" id="first-velocity">
+              <option value="first-velocity">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select name="second-velocity" id="second-velocity">
+              <option value="second-velocity">a</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="conversor-temperature" class="conversor hide">
+        <div class="header-div">
+          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+          <h2>Temperatura</h2>
+        </div>
+        <div id="options-container">
+          <div class="form-control">
+            <select id="unit-from">
+              <option value="c">Grau Celsius (°C)</option>
+              <option value="f">Grau Fahrenheit (°F)</option>
+              <option value="k">Kelvin (K)</option>
+              <option value="r">Grau Rankine (°R)</option>
+              <option value="re">Grau Réaumur (°Ré)</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+          <div class="form-control">
+            <select id="unit-to">
+              <option value="c">Grau Celsius (°C)</option>
+              <option value="f">Grau Fahrenheit (°F)</option>
+              <option value="k">Kelvin (K)</option>
+              <option value="r">Grau Rankine (°R)</option>
+              <option value="re">Grau Réaumur (°Ré)</option>
+            </select>
+            <span class="result">1</span>
+          </div>
+        </div>
+        <div class="numbers-table">
+          <div class="block">
+            <button class="ac-btn">AC</button>
+            <button class="operation delete-btn">DEL</button>
+            <button class="operation percentage-btn">%</button>
+            <button class="operation divider-btn">/</button>
+          </div>
+          <div class="block">
+            <button class="number seven">7</button>
+            <button class="number eight">8</button>
+            <button class="number nine">9</button>
+            <button class="operation multiplication-btn">*</button>
+          </div>
+          <div class="block">
+            <button class="number four">4</button>
+            <button class="number five">5</button>
+            <button class="number six">6</button>
+            <button class="operation subtraction-btn">-</button>
+          </div>
+          <div class="block">
+            <button class="number one">1</button>
+            <button class="number two">2</button>
+            <button class="number three">3</button>
+            <button class="operation sum-btn">+</button>
+          </div>
+          <div class="block">
+            <button class="operation swipe-numbers-table">
+              <i class="fi fi-tr-arrows-repeat"></i>
+            </button>
+            <button class="number zero">0</button>
+            <button class="dot-btn operation">.</button>
+            <button class="equal-btn">=</button>
+          </div>
+        </div>
+      </div>
+      <div id="imc-calculator" class="conversor hide">
+        <div id="auxiliar">
+          <div class="header-div">
+            <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+            <h2>IMC</h2>
+          </div>
+          <div id="form">
+            <form>
+              <div id="form-control">
+                <div class="form-control">
+                  <label for="age">Idade</label>
+                  <input
+                    type="number"
+                    name="age"
+                    id="age"
+                    placeholder="Inserir idade"
+                  />
+                </div>
+                <div class="form-control">
+                  <label
+                    >Genero:
+                    <input type="checkbox" name="gender" id="masculine" />
+                    <input type="checkbox" name="gender" id="feminine" />
+                  </label>
+                </div>
+              </div>
               <div class="form-control">
-                <label for="age">Idade</label>
+                <label for="height">Altura (cm)</label>
                 <input
                   type="number"
-                  name="age"
-                  id="age"
-                  placeholder="Inserir idade"
+                  id="height"
+                  name="height"
+                  placeholder="Inserir altura"
                 />
               </div>
               <div class="form-control">
-                <label
-                  >Genero:
-                  <input type="checkbox" name="gender" id="masculine" />
-                  <input type="checkbox" name="gender" id="feminine" />
-                </label>
+                <label for="weight">Peso (kg)</label>
+                <input
+                  type="number"
+                  id="weight"
+                  name="weight"
+                  placeholder="Inserir peso"
+                />
               </div>
-            </div>
-            <div class="form-control">
-              <label for="height">Altura (cm)</label>
-              <input
-                type="number"
-                id="height"
-                name="height"
-                placeholder="Inserir altura"
-              />
-            </div>
-            <div class="form-control">
-              <label for="weight">Peso (kg)</label>
-              <input
-                type="number"
-                id="weight"
-                name="weight"
-                placeholder="Inserir peso"
-              />
-            </div>
-          </form>
-          <div id="about">
-            <h4>Sobre o IMC</h4>
-            <p>
-              O IMC (Índice de Massa Corporal) é uma medida usada para verificar
-              se o seu peso está adequado à sua altura, calculado dividindo o
-              peso (em kg) pela altura (em metros) ao quadrado.
-            </p>
-          </div>
-          <button id="calculate" type="submit">Calcular</button>
-        </div>
-      </div>
-      <div id="imc-result-table" class="hide">
-        <div class="header-div">
-          <button class="return"><i class="fi fi-rr-angle-left"></i></button>
-          <h2>Seu IMC atual</h2>
-        </div>
-        <div id="imc-result">
-          <span></span>
-          <p>Indice de Massa Corporal</p>
-        </div>
-        <div class="bar-container">
-          <div class="color-bar" id="bar"></div>
-          <div class="label" id="label"></div>
-          <div class="markers">
-            <span>18.5</span>
-            <span>24.0</span>
-            <span>28.0</span>
-          </div>
-        </div>
-        <div id="analysis">
-          <p>Análise</p>
-          <div class="form-control">
-            <h4>Altura (cm)</h4>
-            <span id="height-result"></span>
-          </div>
-          <div class="form-control">
-            <h4>Peso sugerido (kg)</h4>
-            <div id="recommended-weight">
+            </form>
+            <div id="about">
+              <h4>Sobre o IMC</h4>
               <p>
-                <span id="min-weight"></span>
-                a
-                <span id="max-weight"></span>
+                O IMC (Índice de Massa Corporal) é uma medida usada para
+                verificar se o seu peso está adequado à sua altura, calculado
+                dividindo o peso (em kg) pela altura (em metros) ao quadrado.
               </p>
+            </div>
+            <button id="calculate" type="submit">Calcular</button>
+          </div>
+        </div>
+        <div id="imc-result-table" class="hide">
+          <div class="header-div">
+            <button class="return"><i class="fi fi-rr-angle-left"></i></button>
+            <h2>Seu IMC atual</h2>
+          </div>
+          <div id="imc-result">
+            <span></span>
+            <p>Indice de Massa Corporal</p>
+          </div>
+          <div class="bar-container">
+            <div class="color-bar" id="bar"></div>
+            <div class="label" id="label"></div>
+            <div class="markers">
+              <span>18.5</span>
+              <span>24.0</span>
+              <span>28.0</span>
+            </div>
+          </div>
+          <div id="analysis">
+            <p>Análise</p>
+            <div class="form-control">
+              <h4>Altura (cm)</h4>
+              <span id="height-result"></span>
+            </div>
+            <div class="form-control">
+              <h4>Peso sugerido (kg)</h4>
+              <div id="recommended-weight">
+                <p>
+                  <span id="min-weight"></span>
+                  a
+                  <span id="max-weight"></span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

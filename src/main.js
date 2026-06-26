@@ -1,4 +1,5 @@
-import { CalculatorClicks } from "./Calculator/CalculatorClicks.mjs";
+import "./style.css";
+import { CalculatorClicks } from "./js/Calculator/CalculatorClicks.mjs";
 
 var conversorsInstances = {};
 
