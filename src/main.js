@@ -1,5 +1,17 @@
 import "./style.css";
 import { CalculatorClicks } from "./js/Calculator/CalculatorClicks.mjs";
+import { renderKeyboard } from "./js/Screen/keyBoards.js";
+import calculatorHtml from "./html/pages/calculator.html?raw";
+import createConversors from "./js/Conversors/CreateConversorsHtml.js";
+
+//Renderizando paginas
+const calculator = document.getElementById("calculator");
+calculator.innerHTML = calculatorHtml;
+
+const conversorTable = document.querySelector("#conversor-table");
+createConversors();
+// Renderizando teclados
+renderKeyboard(document.getElementById("calculator-keyboard"));
 
 var conversorsInstances = {};
 
@@ -1198,8 +1210,6 @@ const numsTableBtns = document.querySelectorAll(".numbers-table button");
 const headerContainerBtns = document.querySelectorAll(
   "#header-container button",
 );
-const calculator = document.querySelector("#calculator");
-const conversorTable = document.querySelector("#conversor-table");
 const moreOptionsContainer = document.querySelector("#more-options-container");
 const history = document.querySelector("#history");
 const toggleThemeBtn = document.querySelector("#toggle-theme-btn");
