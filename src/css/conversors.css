@@ -1,0 +1,30 @@
+/* Conversor table */
+#conversor-table {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 130px);
+  gap: 30px;
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1rem;
+}
+
+#conversor-table button {
+  width: 240px;
+  height: 80px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--highlighted-text);
+  font-weight: bold;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: var(--button-background);
+  border-radius: 10px;
+}
+
+#conversor-table button:hover {
+  opacity: 1;
+  scale: 1.1;
+}

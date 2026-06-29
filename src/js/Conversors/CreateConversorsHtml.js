@@ -1,42 +1,56 @@
 import getConversors from "./GetConversors.js";
+import othersConversors from "../../html/pages/conversors.html?raw";
 
-async function createConversors(containerSelector = "#conversors-container") {
+const icons = [
+  "fi fi-ts-laptop-code",
+  "fi fi-ts-equality",
+  "fi fi-tr-pencil-ruler",
+  "fi fi-ts-clock-three",
+  "fi fi-tr-envelope-open-text",
+  "fi fi-tr-calendar-minus",
+  "fi fi-ts-badge-percent",
+  "fi fi-ts-coin",
+  "fi fi-ts-coins",
+  "fi fi-tr-arrows-repeat",
+  "fi fi-tr-running",
+  "fi fi-ts-temperature-high",
+  "fi fi-tr-restaurant",
+];
+
+async function createConversors() {
   const data = await getConversors();
   const container = document.querySelector("#conversor-table");
 
-  if (!Array.isArray(data)) return;
+  if (!container) {
+    console.error("Elemento #conversor-table não encontrado.");
+    return null;
+  }
 
-  data.forEach((conversor) => {
-    const wrapper = document.createElement("div");
-    wrapper.className = "conversor-theme";
+  if (!Array.isArray(data)) return container;
+
+  data.forEach((conversor, i) => {
+    const div = document.createElement("div");
+    div.className = "conversors";
 
     const btn = document.createElement("button");
 
-    const name =
-      typeof conversor.name === "string" ? conversor.name.trim() : "";
-    const sanitized = name
-      ? name
-          .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^a-z0-9\-]/g, "")
-      : "";
-    btn.dataset.target = sanitized
-      ? `conversor-${sanitized}`
-      : `conversor-${conversor.id}`;
+    const name = conversor.name;
 
-    const labelText =
-      conversor.label || conversor.name || `Conversor ${conversor.id}`;
-    btn.textContent = labelText;
+    btn.dataset.target = name;
+    btn.dataset.conversionId = conversor.conversionTypeId ?? i + 1;
 
-    wrapper.appendChild(btn);
-    container.appendChild(wrapper);
+    const label = conversor.label;
+
+    const icon = document.createElement("i");
+    icon.className = icons[i];
+
+    btn.appendChild(icon);
+    btn.appendChild(document.createTextNode(` ${label}`));
+    div.appendChild(btn);
+    container.appendChild(div);
   });
-}
 
-document.addEventListener("DOMContentLoaded", () => {
-  createConversors().catch((err) =>
-    console.error("Create conversors error:", err),
-  );
-});
+  return container;
+}
 
 export default createConversors;

@@ -3,6 +3,7 @@
 @import url("https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css");
 @import "./css/keyBoard.css";
 @import "./css/Calculator.css";
+@import "./css/conversors.css";
 
 /* Root */
 :root {
@@ -34,8 +35,6 @@ body[data-theme="light"] {
 
   --clicked: #2044ea;
 }
-
-@import "./css/keyBoard.css";
 
 /* Geral */
 * {
@@ -151,37 +150,6 @@ option {
   margin: 15px;
   text-align: end;
   gap: 15px;
-}
-
-/* Conversor table */
-#conversor-table {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(5, 130px);
-  gap: 30px;
-  text-align: center;
-  margin-top: 3rem;
-  padding: 1rem;
-}
-
-#conversor-table button {
-  width: 240px;
-  height: 80px;
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: var(--highlighted-text);
-  font-weight: bold;
-  opacity: 0.9;
-  cursor: pointer;
-  transition: 0.3s;
-  background-color: var(--button-background);
-  border-radius: 10px;
-}
-
-#conversor-table button:hover {
-  opacity: 1;
-  scale: 1.1;
 }
 
 /* conversor-tables */
