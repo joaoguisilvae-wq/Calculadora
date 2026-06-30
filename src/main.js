@@ -9,14 +9,11 @@ import createConversors from "./js/Conversors/CreateConversorsHtml.js";
 
 import changeScreen from "./js/Screen/PageChange.js";
 
+import { setColor } from "./js/Screen/ColorChange.js";
+
 //Renderizando paginas
 changeScreen(calculatorHtml, true);
 renderKeyboard(document.getElementById("calculator-keyboard"));
-
-const app = document.querySelector("#app");
-
-const calcBtn = document.getElementById("calc-option");
-const convBtn = document.getElementById("conv-options");
 
 document.addEventListener("click", (e) => {
   const btn = e.target.closest("#calc-option, #conv-options, #more-options");
@@ -37,14 +34,23 @@ document.addEventListener("click", (e) => {
     moreOptionsContainer.classList.toggle("hide");
   }
 });
-const conversorTable = document.querySelector("#conversor-table");
 
-var conversorsInstances = {};
+// Mudança de cores
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("#light, #dark, #right, #left");
+  if (!btn) return;
 
-const calc = new CalculatorClicks(
-  document.querySelector("#in-operation"),
-  document.querySelector("#done-operation"),
-);
+  setColor(btn.id);
+});
+
+// const conversorTable = document.querySelector("#conversor-table");
+
+// var conversorsInstances = {};
+
+// const calc = new CalculatorClicks(
+//   document.querySelector("#in-operation"),
+//   document.querySelector("#done-operation"),
+// );
 
 // Objetos
 
@@ -311,175 +317,6 @@ const calc = new CalculatorClicks(
 //       if (!data.conversion_rates) {
 //         throw new Error("Resposta da API inválida");
 //       }
-
-//       const currencyNames = {
-//         USD: "Dólar americano",
-//         AED: "Dirham dos Emirados Árabes Unidos",
-//         AFN: "Afegane afegão",
-//         ALL: "Lek albanês",
-//         AMD: "Dram armênio",
-//         ANG: "Florim das Antilhas Neerlandesas",
-//         AOA: "Kwanza angolano",
-//         ARS: "Peso argentino",
-//         AUD: "Dólar australiano",
-//         AWG: "Florim arubano",
-//         AZN: "Manat azeri",
-//         BAM: "Marco conversível da Bósnia e Herzegovina",
-//         BBD: "Dólar barbadense",
-//         BDT: "Taka bengali",
-//         BGN: "Lev búlgaro",
-//         BHD: "Dinar bareinita",
-//         BIF: "Franco burundiano",
-//         BMD: "Dólar das Bermudas",
-//         BND: "Dólar bruneano",
-//         BOB: "Boliviano",
-//         BRL: "Real brasileiro",
-//         BSD: "Dólar bahamense",
-//         BTN: "Ngultrum butanês",
-//         BWP: "Pula botsuanês",
-//         BYN: "Rublo bielorrusso",
-//         BZD: "Dólar belizenho",
-//         CAD: "Dólar canadense",
-//         CDF: "Franco congolês",
-//         CHF: "Franco suíço",
-//         CLF: "Unidade de Fomento chilena",
-//         CLP: "Peso chileno",
-//         CNH: "Yuan chinês (offshore)",
-//         CNY: "Yuan chinês (onshore)",
-//         COP: "Peso colombiano",
-//         CRC: "Colón costarriquenho",
-//         CUP: "Peso cubano",
-//         CVE: "Escudo cabo-verdiano",
-//         CZK: "Coroa tcheca",
-//         DJF: "Franco djiboutiano",
-//         DKK: "Coroa dinamarquesa",
-//         DOP: "Peso dominicano",
-//         DZD: "Dinar argelino",
-//         EGP: "Libra egípcia",
-//         ERN: "Nakfa eritreia",
-//         ETB: "Birr etíope",
-//         EUR: "Euro",
-//         FJD: "Dólar fijiano",
-//         FKP: "Libra das Ilhas Falkland",
-//         FOK: "Coroa feroesa",
-//         GBP: "Libra esterlina",
-//         GEL: "Lari georgiano",
-//         GGP: "Libra de Guernsey",
-//         GHS: "Cedi ganês",
-//         GIP: "Libra gibraltina",
-//         GMD: "Dalasi gambiano",
-//         GNF: "Franco guineano",
-//         GTQ: "Quetzal guatemalteco",
-//         GYD: "Dólar guianense",
-//         HKD: "Dólar de Hong Kong",
-//         HNL: "Lempira hondurenha",
-//         HRK: "Kuna croata",
-//         HTG: "Gourde haitiano",
-//         HUF: "Florim húngaro",
-//         IDR: "Rupia indonésia",
-//         ILS: "Novo shekel israelense",
-//         IMP: "Libra de Man",
-//         INR: "Rupia indiana",
-//         IQD: "Dinar iraquiano",
-//         IRR: "Rial iraniano",
-//         ISK: "Coroa islandesa",
-//         JEP: "Libra de Jersey",
-//         JMD: "Dólar jamaicano",
-//         JOD: "Dinar jordaniano",
-//         JPY: "Iene japonês",
-//         KES: "Xelim queniano",
-//         KGS: "Som quirguiz",
-//         KHR: "Riel cambojano",
-//         KID: "Dólar da Ilha Christmas",
-//         KMF: "Franco comoriano",
-//         KRW: "Won sul-coreano",
-//         KWD: "Dinar kuwaitiano",
-//         KYD: "Dólar das Ilhas Cayman",
-//         KZT: "Tenge cazaque",
-//         LAK: "Kip laosiano",
-//         LBP: "Libra libanesa",
-//         LKR: "Rupia do Sri Lanka",
-//         LRD: "Dólar liberiano",
-//         LSL: "Loti lesotiano",
-//         LYD: "Dinar líbio",
-//         MAD: "Dirham marroquino",
-//         MDL: "Leu moldavo",
-//         MGA: "Ariary malgaxe",
-//         MKD: "Denar macedônio",
-//         MMK: "Kyat birmanês",
-//         MNT: "Tugrik mongol",
-//         MOP: "Pataca de Macau",
-//         MRU: "Ouguiya mauritana",
-//         MUR: "Rupia mauriciana",
-//         MVR: "Rupia maldiva",
-//         MWK: "Kwacha malauiana",
-//         MXN: "Peso mexicano",
-//         MYR: "Ringgit malaio",
-//         MZN: "Metical moçambicano",
-//         NAD: "Dólar namibiano",
-//         NGN: "Naira nigeriana",
-//         NIO: "Córdoba nicaraguense",
-//         NOK: "Coroa norueguesa",
-//         NPR: "Rupia nepalesa",
-//         NZD: "Dólar neozelandês",
-//         OMR: "Rial omani",
-//         PAB: "Balboa panamenha",
-//         PEN: "Sol peruano",
-//         PGK: "Kina papuásia-nova-guineense",
-//         PHP: "Peso filipino",
-//         PKR: "Rupia paquistanesa",
-//         PLN: "Złoty polonês",
-//         PYG: "Guarani paraguaio",
-//         QAR: "Rial catariano",
-//         RON: "Leu romeno",
-//         RSD: "Dinar sérvio",
-//         RUB: "Rublo russo",
-//         RWF: "Franco ruandês",
-//         SAR: "Riyal saudita",
-//         SBD: "Dólar das Ilhas Salomão",
-//         SCR: "Rupia seichelense",
-//         SDG: "Libra sudanesa",
-//         SEK: "Coroa sueca",
-//         SGD: "Dólar singapuriano",
-//         SHP: "Libra de Santa Helena",
-//         SLE: "Leone do Serra Leoa",
-//         SLL: "Leone antigo do Serra Leoa",
-//         SOS: "Xelim somali",
-//         SRD: "Dólar surinamês",
-//         SSP: "Libra sul-sudanesa",
-//         STN: "Dobra de São Tomé e Príncipe",
-//         SYP: "Libra síria",
-//         SZL: "Lilangeni suazi",
-//         THB: "Baht tailandês",
-//         TJS: "Somoni tadjique",
-//         TMT: "Manat turcomeno",
-//         TND: "Dinar tunisiano",
-//         TOP: "Paʻanga tonganesa",
-//         TRY: "Lira turca",
-//         TTD: "Dólar de Trinidad e Tobago",
-//         TVD: "Dólar de Tuvalu",
-//         TWD: "Novo dólar taiwanês",
-//         TZS: "Xelim tanzaniano",
-//         UAH: "Hryvnia ucraniana",
-//         UGX: "Xelim ugandense",
-//         UYU: "Peso uruguaio",
-//         UZS: "Som uzbeque",
-//         VES: "Bolívar venezuelano",
-//         VND: "Dong vietnamita",
-//         VUV: "Vatu vanuatuense",
-//         WST: "Tala samoano",
-//         XAF: "Franco CFA BEAC",
-//         XCD: "Dólar do Caribe Oriental",
-//         XCG: "Florim das Antilhas Neerlandesas",
-//         XDR: "Direitos Especiais de Saque (FMI)",
-//         XOF: "Franco CFA BCEAO",
-//         XPF: "Franco CFP",
-//         YER: "Rial iemenita",
-//         ZAR: "Rand sul-africano",
-//         ZMW: "Kwacha zambiano",
-//         ZWG: "Dólar zimbabuano (gold)",
-//         ZWL: "Dólar zimbabuano (2009)",
-//       };
 
 //       for (let i = 0; i < selects.length; i++) {
 //         const select = selects[i];

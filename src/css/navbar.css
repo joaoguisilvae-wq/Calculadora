@@ -1,0 +1,94 @@
+/* Header */
+#header-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#header-container header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex: 1;
+  margin: 1rem 0;
+}
+
+#header-container button {
+  background: none;
+  border: none;
+  color: var(--highlighted-text);
+  padding: 10px;
+  font-size: 1rem;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+#header-container button:hover {
+  opacity: 0.8;
+}
+
+#header-container button:focus {
+  opacity: 1;
+}
+
+/* More options */
+#more-options-container {
+  position: absolute;
+  top: 70%;
+  right: 145px;
+  background-color: var(--bg-more-options);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+#more-options-container button {
+  border: none;
+  border-radius: 25px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+#more-options-container button:hover {
+  opacity: 1;
+}
+
+#more-options-container p {
+  color: var(--highlighted-text);
+  margin: 0 auto;
+}
+
+.toggle-color-theme,
+.toggle-base-theme {
+  display: flex;
+  justify-content: space-around;
+}
+
+#more-options-container .color-btn {
+  background-color: var(--button-bg);
+  border: 2px solid var(--border-color-2);
+  padding: 6px 10px;
+  text-align: center;
+}
+
+#more-options-container .color-btn:hover {
+  scale: 1.03;
+}
+
+#more-options-container .preview {
+  background-color: var(--bg-color);
+  border: 2px solid var(--border-color-2);
+  padding: 6px 10px;
+  width: 10px;
+  height: 20px;
+  border-radius: 100%;
+}

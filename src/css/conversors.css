@@ -20,7 +20,7 @@
   opacity: 0.9;
   cursor: pointer;
   transition: 0.3s;
-  background-color: var(--button-background);
+  background-color: var(--button-bg);
   border-radius: 10px;
 }
 

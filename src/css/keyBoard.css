@@ -11,7 +11,7 @@
 .keyboard button {
   width: 110px;
   height: 65px;
-  background-color: var(--button-background);
+  background-color: var(--button-bg);
   border-radius: 25px;
   border: none;
   font-size: 1.5rem;
@@ -40,6 +40,6 @@
 }
 
 .keyboard .equal-btn {
-  background-color: var(--equal-background);
+  background-color: var(--equal-bg);
   color: var(--equal-text);
 }
